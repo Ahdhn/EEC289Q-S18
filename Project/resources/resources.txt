@@ -1,0 +1,7 @@
+Deep Learning for Graphics - Eurographics 2018 Tutorial <http://geometry.cs.ucl.ac.uk/dl4g/>
+
+3D-Machine-Learning <https://github.com/timzhang642/3D-Machine-Learning>
+
+Data <http://grail.cs.washington.edu/projects/digital-human/> <http://tosca.cs.technion.ac.il/book/resources_data.html>
+
+PointNet: Deep Learning on Point Sets for 3D Classification and Segmentation <http://stanford.edu/~rqi/pointnet/>
