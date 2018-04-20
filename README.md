@@ -1,4 +1,4 @@
-# MATH160 - Data Analytics for Computer Engineers
+# EEC289Q - Data Analytics for Computer Engineers
 
 Professor: Soheil Ghiasi
 
