@@ -1,0 +1,13 @@
+or the first homework assignment, we are going to use MATLAB to code up a specific version of linear regression. In particular, please do exercise 1.A in the Stanford tutorial that I mentioned in class. You are intentionally asked to use gradient descent (rather than the one-shot matrix pseudo-inverse algorithm discussed in class) to perform linear regression, as upcoming assignments will gradually build on this version to train neural networks. 
+
+Here are the relevant links. Exercise 1.A:
+
+http://ufldl.stanford.edu/tutorial/supervised/LinearRegression/
+
+The boiler plate code base is at:
+
+https://github.com/amaas/stanford_dl_ex
+
+Note that the given code already takes care of various steps, and you only need to add a bit of code to linear_regression.m to calculate the error function and its gradient. It is instructive, however, to study the entire project to fully understand how various steps come together.
+
+Please submit your homework as *a single pdf* file on canvas by 5pm Fri 4/20. On the first page of the pdf, include the parameter vector (theta) and the price prediction graph (similar to what is shown on the webpage). On the subsequent pages of the pdf, include your linear_regression.m file.
