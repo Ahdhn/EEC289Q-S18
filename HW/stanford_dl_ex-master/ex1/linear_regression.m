@@ -25,11 +25,19 @@ function [f,g] = linear_regression(theta, X,y)
     %error vector
     err=theta'*X-y;
     
+    
     %objective function = 0.5*sum((error vector)^2) 
     %using dot product instead
-    f=1/2*err*err';
+   
+    for i=1:m
+        f = f + 0.5*err(i)*err(i);
+    end
     
     %gradient vector = sum(x*(error vector))
     %using dot product instead
-    g=X*err';
+    for i=1:n
+        g(i) = sum(X(i,:).*err);
+    end
+         
+   
 end

@@ -8,6 +8,7 @@ function [f,g] = logistic_regression(theta, X,y)
   %
 
   m=size(X,2);
+  n = size(X,1);
   
   % initialize objective value and gradient.
   f = 0;
@@ -22,3 +23,12 @@ function [f,g] = logistic_regression(theta, X,y)
   %        up the gradients (df/dtheta) for each example. Store the result in 'g'.
   %
 %%% YOUR CODE HERE %%%
+
+h = sigmoid(theta'*X);
+for i=1:m
+    f = f - (y(i)*log(h(i)) + (1- y(i))*log(1-h(i)));
+end
+
+for i=1:m
+    g = g + X(:,i)*(h(i)- y(i));
+end

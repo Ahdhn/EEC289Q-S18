@@ -9,6 +9,8 @@ function average_error = grad_check(fun, theta0, num_checks, varargin)
   for i=1:num_checks
     T = theta0;
     j = randsample(numel(T),1);
+    
+      
     T0=T; T0(j) = T0(j)-delta;
     T1=T; T1(j) = T1(j)+delta;
 
