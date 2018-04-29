@@ -1,4 +1,5 @@
-
+clear;
+clc;
 addpath ../common
 addpath ../common/minFunc_2012/minFunc
 addpath ../common/minFunc_2012/minFunc/compiled
@@ -46,7 +47,7 @@ fprintf('Optimization took %f seconds.\n', toc);
 theta = rand(n,1)*0.001;
 tic;
 theta=minFunc(@logistic_regression_vec, theta, options, train.X, train.y);
-%grad_check(@logistic_regression_vec,theta,10,train.X,train.y);
+grad_check(@logistic_regression_vec,theta,10,train.X(:,1:10),train.y(1:10));
 fprintf('Optimization took %f seconds.\n', toc);
 
 % Print out training accuracy.
