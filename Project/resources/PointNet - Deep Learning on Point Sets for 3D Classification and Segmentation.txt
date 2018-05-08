@@ -1,4 +1,0 @@
-PointNet: Deep Learnin on Point Sets for 3D Classificationa and Segmentation
-
-- Unified architecture for point analysis that directly consumes points, no conversion to volumns/voxels thus respect the points invariance. Applications: object classification, part segmentation, scene semantic parsing. 
-- Challenges with points analysis is irregulaity. Convolutional architecture requires 

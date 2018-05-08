@@ -1,6 +1,6 @@
 % runs training procedure for supervised multilayer network
 % softmax output layer with cross entropy loss function
-
+clear;
 %% setup environment
 % experiment information
 % a struct containing network layer sizes etc
@@ -25,9 +25,9 @@ ei.input_dim = 784;
 % number of output classes
 ei.output_dim = 10;
 % sizes of all hidden layers and the output layer
-ei.layer_sizes = [256, ei.output_dim];
+ei.layer_sizes = [256, ei.output_dim,256, ei.output_dim];
 % scaling parameter for l2 weight regularization penalty
-ei.lambda = 0;
+ei.lambda = 0.9;
 % which type of activation function to use in hidden layers
 % feel free to implement support for only the logistic sigmoid function
 ei.activation_fun = 'logistic';

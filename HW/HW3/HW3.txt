@@ -1,0 +1,9 @@
+1- exercise 1.c:
+
+http://ufldl.stanford.edu/tutorial/supervised/SoftmaxRegression/ (Links to an external site.)Links to an external site.
+
+2- supervised neural networks:
+
+http://ufldl.stanford.edu/tutorial/supervised/ExerciseSupervisedNeuralNetwork/ (Links to an external site.)Links to an external site.
+
+3- Calculate the number of model parameters (weights) and inference operations (forward pass) in each of the 8 layers of AlexNet (Page 12 of AlexNet.pdf on canvas). You should clearly show your work. Count multiply and accumulate as two distinct operations. Report numbers in both absolute count and percentage of total number of parameters or operations, and explain key trends that you observe. You can consider only convolutional and fully connected layers (ignore normalization, max pooling, etc.)
