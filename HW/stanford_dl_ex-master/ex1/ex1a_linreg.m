@@ -48,7 +48,7 @@ tic;
 options = struct('MaxIter', 200);
 theta = minFunc(@linear_regression, theta, options, train.X, train.y);
 
-grad_check(@linear_regression,theta,10,train.X,train.y);
+grad_check(@linear_regression,theta,10,train.X(:,1:10),train.y(1:10));
 
 fprintf('Optimization took %f seconds.\n', toc);
 
@@ -65,7 +65,7 @@ theta = rand(n,1);
 tic;
 theta = minFunc(@linear_regression_vec, theta, options, train.X, train.y);
 
-grad_check(@linear_regression_vec,theta,10,train.X,train.y);
+grad_check(@linear_regression_vec,theta,10,train.X(:,1:10),train.y(1:10));
 
 fprintf('Optimization took %f seconds.\n', toc);
 
