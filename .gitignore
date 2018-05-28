@@ -33,6 +33,7 @@ build/
 
 modelnet40_ply_hdf5_2048/
 vs15/
+Project/code/dgcnn-master/
 
 # Enable "build/" folder in the NuGet Packages folder since NuGet packages use it for MSBuild targets
 !packages/*/build/
