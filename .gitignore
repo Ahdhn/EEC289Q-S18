@@ -31,12 +31,16 @@ build/
 [Bb]in/
 [Oo]bj/
 
+modelnet40_ply_hdf5_2048/
+vs15/
+
 # Enable "build/" folder in the NuGet Packages folder since NuGet packages use it for MSBuild targets
 !packages/*/build/
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
+
 
 *_i.c
 *_p.c
