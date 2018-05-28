@@ -11,7 +11,7 @@
 %%======================================================================
 %% STEP 0: Initialize Parameters and Load Data
 %  Here we initialize some parameters used for the exercise.
-
+clc;
 % Configuration
 imageDim = 28;
 numClasses = 10;  % Number of classes (MNIST images fall into 10 classes)
@@ -39,7 +39,7 @@ theta = cnnInitParams(imageDim,filterDim,numFilters,poolDim,numClasses);
 %  calculation for your cnnCost.m function.  You may need to add the
 %  appropriate path or copy the file to this directory.
 
-DEBUG=false;  % set this to true to check gradient
+DEBUG=true;  % set this to true to check gradient
 if DEBUG
     % To speed up gradient checking, we will use a reduced network and
     % a debugging data set
@@ -61,7 +61,7 @@ if DEBUG
                                 db_numFilters,db_poolDim), db_theta);
  
     % Use this to visually compare the gradients side by side
-    disp([numGrad grad]);
+    %disp([numGrad grad]);
     
     diff = norm(numGrad-grad)/norm(numGrad+grad);
     % Should be small. In our implementation, these values are usually 
@@ -82,9 +82,10 @@ options.minibatch = 256;
 options.alpha = 1e-1;
 options.momentum = .95;
 
+tic 
 opttheta = minFuncSGD(@(x,y,z) cnnCost(x,y,z,numClasses,filterDim,...
                       numFilters,poolDim),theta,images,labels,options);
-
+toc 
 %%======================================================================
 %% STEP 4: Test
 %  Test the performance of the trained model using the MNIST test set. Your

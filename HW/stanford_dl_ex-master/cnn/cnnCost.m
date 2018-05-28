@@ -72,6 +72,8 @@ activations = zeros(convDim,convDim,numFilters,numImages);
 activationsPooled = zeros(outputDim,outputDim,numFilters,numImages);
 
 %%% YOUR CODE HERE %%%
+activations = cnnConvolve(filterDim, numFilters, images, Wc, bc);
+activationsPooled = cnnPool(poolDim,activations);
 
 % Reshape activations into 2-d matrix, hiddenSize x numImages,
 % for Softmax layer
@@ -88,6 +90,9 @@ activationsPooled = reshape(activationsPooled,[],numImages);
 probs = zeros(numClasses,numImages);
 
 %%% YOUR CODE HERE %%%
+soft = Wd*activationsPooled + repmat(bd,1,numImages);
+soft = exp(soft - max(soft,[],1));
+probs = soft./sum(soft);
 
 %%======================================================================
 %% STEP 1b: Calculate Cost
@@ -98,7 +103,9 @@ probs = zeros(numClasses,numImages);
 cost = 0; % save objective into cost
 
 %%% YOUR CODE HERE %%%
-
+%one-hot encoding 
+hot = full(sparse(labels,1:numImages,1));
+cost = -hot(:)'*log(probs(:))/numImages;
 % Makes predictions given probs and returns without backproagating errors.
 if pred
     [~,preds] = max(probs,[],1);
@@ -118,7 +125,16 @@ end;
 %  quickly.
 
 %%% YOUR CODE HERE %%%
-
+delta = probs-hot;
+term1 = Wd'*((1/numImages).*delta);
+err_tmp = reshape(term1,outputDim,outputDim,numFilters,numImages);
+for I=1:numImages 
+    for F=1:numFilters        
+        err(:,:,F,I) = (1/(poolDim^2)).*kron(squeeze(err_tmp(:,:,F,I))...
+            ,ones(poolDim,poolDim));        
+    end
+end
+err = activations.*(1.0 -activations).*err;
 %%======================================================================
 %% STEP 1d: Gradient Calculation
 %  After backpropagating the errors above, we can use them to calculate the
@@ -128,6 +144,15 @@ end;
 %  for that filter with each image and aggregate over images.
 
 %%% YOUR CODE HERE %%%
+for I=1:numImages
+    for F=1:numFilters
+        Wc_grad(:,:,F) = Wc_grad(:,:,F)+conv2(images(:,:,I),...
+            rot90(err(:,:,F,I),2),'valid');
+        bc_grad(F) = bc_grad(F) + sum(sum(err(:,:,F,I)));
+    end
+end
+Wd_grad= delta*(activationsPooled)'/numImages;
+bd_grad = (1/numImages).*delta*ones(numImages,1);
 
 %% Unroll gradient into grad vector for minFunc
 grad = [Wc_grad(:) ; Wd_grad(:) ; bc_grad(:) ; bd_grad(:)];
