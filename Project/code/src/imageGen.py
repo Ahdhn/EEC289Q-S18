@@ -4,6 +4,7 @@ def LoadModels():
 
 def GenerateImages():
     print("GenerateImages");
+
     LoadModels();
     images = 0;
     return images;
