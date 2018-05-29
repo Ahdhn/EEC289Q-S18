@@ -85,11 +85,13 @@ def testModel():
 def Model(input_points, 
           labels,
           batch_size,
-          dim):
+          dim,
+          num_pts):
 
     with tf.Graph().as_default():#not needed, but it is a good practice 
         points_pl = tf.placeholder(tf.float32, shape=(batch_size, num_pts, dim))
         labels_pl = tf.placeholder(tf.int32, shape=(batch_size))
+        knn_graph =  KNN(pointcloud_pl=points_pl, k=20)
 
 
 
@@ -116,7 +118,7 @@ def trainMain(XYZ_point_cloud, labels):
     decay_decay_step = float(decay_step)
     decay_clip = 0.99
 
-    Model()
+    Model(XYZ_point_cloud, labels, batch_size, pos_dim, num_point)
 
     
 
@@ -124,7 +126,7 @@ def trainMain(XYZ_point_cloud, labels):
 
 if __name__ == "__main__":    
 
-    if True:
+    if False:
         testModel()
 
     trainMain()

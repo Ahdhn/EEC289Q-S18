@@ -18,5 +18,5 @@ if __name__ == '__main__':
     #cast to int 
     label_feed = label_feed.astype(np.int) 
 
-    with tf.Graph().as_default():#not needed but it is a good practice 
-        #placeholder for the points 
+    #with tf.Graph().as_default():#not needed but it is a good practice 
+    #    #placeholder for the points
