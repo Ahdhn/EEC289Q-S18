@@ -4,6 +4,7 @@ import math
 
 from util import KNN
 
+############################################################################
 ###### TF helper functions 
 def VarCPU(name, shape, init, use_fp16=False, train = True):
     #create var stored on cpu mem
@@ -72,6 +73,7 @@ def batch_norm(inputs, training, scope, moments_dim, decay):
 
         return normed
 
+############################################################################
 ###### TF layers creator function
 def conv2d(inputs, 
            num_output_channels,
@@ -173,6 +175,7 @@ def dropout(inputs,
                           lambda:inputs)
         return outputs
 
+############################################################################
 ###### Operator 
 def edgeConv(points_pl, knn_graph, k=20):
     #get the edge feature
@@ -199,18 +202,8 @@ def edgeConv(points_pl, knn_graph, k=20):
     edge_conv = tf.concat([points_pl_central, points_pl_neighbors-points_pl_central],axis=-1)
     return edge_conv
 
+############################################################################
 ###### Model creation 
-def Model(input_points, 
-          labels,
-          batch_size,
-          dim,
-          num_pts):
-
-    with tf.Graph().as_default():#not needed, but it is a good practice 
-        points_pl = tf.placeholder(tf.float32, shape=(batch_size, num_pts, dim))
-        labels_pl = tf.placeholder(tf.int32, shape=(batch_size))
-        knn_graph =  KNN(pointcloud_pl=points_pl, k=20)
-
 def createModel(points_pl, training, knn_graph, decay=None):
     #input_points is a placeholder 
     batch_size = points_pl.get_shape()[0].value
@@ -338,16 +331,103 @@ def createModel(points_pl, training, knn_graph, decay=None):
     #print(net)
 
     return net, end_points
-    
-###### Testing 
-def get_loss(pred, label, end_points):
+
+############################################################################
+###### Training  
+def get_loss(pred, label):
     #pred: b*num_classes
     #labels: b
     labels = tf.one_hot(indices=label, depth=40)
     loss = tf.losses.softmax_cross_entropy(onehot_labels=labels, logits=pred, label_smoothing=0.2)
     classify_loss = tf.reduce_mean(loss)
     return classify_loss
+def trainMain(num_points, XYZ_point_cloud, labels, XYZ_point_notmals=None):
+    
+    print("Training")
 
+    batch_size = 32
+    #num_points = 1024
+    pos_dim = 3
+    max_epoch = 250
+    learning_rate = 0.001
+    gpu = 0
+    momentum = 0.9
+    optimizer = 'adam'
+    decay_step = 200000
+    decay_rate = 0.7
+    max_num_point = 2048
+    num_classes = 40
+
+    k=20
+
+    bn_init_decay = 0.5
+    bn_decay_decay_rate = 0.5
+    bn_decay_decay_step = float(decay_step)
+    bn_decay_clip = 0.99
+
+    with tf.Graph().as_default():
+        #Model(XYZ_point_cloud, labels, batch_size, pos_dim, num_point)
+        with tf.device('/gpu:'+str(gpu)):
+            points_pl = tf.placeholder(tf.float32, shape=(batch_size, num_points, pos_dim))
+            labels_pl = tf.placeholder(tf.int32, shape=(batch_size))
+            knn_graph =  KNN(pointcloud_pl=points_pl, k=k)
+            #is_training_pl = tf.placeholder(tf.bool, shape=())
+            #print(is_training_pl)
+            #
+            #batch = tf.Variable(0)
+            #bn_momentum = tf.train.exponential_decay(bn_init_decay,
+            #                                         batch*batch_size,
+            #                                         bn_decay_decay_step,
+            #                                         bn_decay_decay_rate,
+            #                                         staircase=True)
+            #bn_decay = tf.minimum(bn_decay_clip, 1 - bn_momentum)
+            #tf.summary.scalar('bn_decay', bn_decay)
+            #
+            ##create model, get loss
+            #pred, end_points = createModel(points_pl=points_pl, 
+            #                               training=is_training_pl, 
+            #                               knn_graph=knn_graph,
+            #                               decay=bn_decay)
+            #loss = get_loss(pred=pred, label=labels_pl)
+            #tf.summary.scalar('loss',loss)
+            #
+            #correct = tf.equal(tf.argmax(pred,1), tf.to_int64(labels_pl))
+            #accuracy = tf.reduce_sum(tf.cast(correct, tf.float32)) /float(batch_size)
+            #tf.summary.scalar('accuracy', accuracy)
+            #
+            ##training op
+            #learning_rate = tf.train.exponential_decay(learning_rate,  
+            #                                           batch * batch_size,
+            #                                           decay_step,        
+            #                                           decay_rate,        
+            #                                           staircase=True)
+            #learning_rate = tf.maximum(learning_rate, 0.00001) 
+            #tf.summary.scalar('learning_rate', learning_rate)
+            #opt = tf.train.AdadeltaOptimizer(learning_rate)
+            #train_op = opt.minimize(loss, global_step=batch)
+            #            
+            #saver = tf.train.Saver()
+
+        #session
+        #config = tf.ConfigProto()
+        #config.gpu_options.allow_growth = True
+        #config.allow_soft_placement = False
+        #config.log_device_placement = False
+        #sess = tf.Session(config=config)
+        #
+        #merged = tf.summary.merge_all()
+        #train_writer = tf.summary.FileWriter('')
+
+
+            
+
+
+
+    
+
+    
+############################################################################
+###### Testing 
 def testModel():
     #testing the model by generating random points
     batch_size=2
@@ -374,40 +454,10 @@ def testModel():
             feed_dict = {points_pl:input_points, labels_pl:labels}
             res1, res2 =sess.run([pos, features], feed_dict=feed_dict)
             print(res1.shape)
-            print(res1)        
-        
-###### Training  
-def trainMain(XYZ_point_cloud, labels):
-    
-    print("Training")
-
-    batch_size = 2
-    num_point = 1024
-    pos_dim = 3
-    max_epoch = 250
-    learning_rate = 0.001
-    momentum = 0.9
-    optimizer = 'adam'
-    decay_step = 200000
-    decay_rate = 0.7
-    max_num_point = 2048
-    num_classes = 40
-
-
-    Init_decay = 0.5
-    decay_decay_rate = 0.5
-    decay_decay_step = float(decay_step)
-    decay_clip = 0.99
-
-    Model(XYZ_point_cloud, labels, batch_size, pos_dim, num_point)
-
-    
-
-    tf.nn.conv2d()
-
+            print(res1) 
 if __name__ == "__main__":    
 
-    if True:
+    if False:
         testModel()
 
-    trainMain()
+    trainMain(XYZ_point_cloud, labels)
