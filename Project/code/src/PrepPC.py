@@ -14,9 +14,8 @@ TRAIN_FILES = provider.getDataFiles( \
 TEST_FILES = provider.getDataFiles(\
     os.path.join(BASE_DIR, '../data/modelnet40_ply_hdf5_2048/test_files.txt'))
 
-def PreparePointCloud():
+def PreparePointCloud(NUM_POINT):
     print("PreparePointCloud")
-
     # Shuffle train files
     train_file_idxs = np.arange(0, len(TRAIN_FILES))
     test_file_idxs = np.arange(0, len(TEST_FILES))
@@ -35,5 +34,7 @@ def PreparePointCloud():
         xyz, lab = provider.loadDataFile('../' + TEST_FILES[test_file_idxs[i]])
         XYZ_point_cloud = np.concatenate((XYZ_point_cloud, xyz))
         labels = np.concatenate((labels, lab))    
+   
+    XYZ_point_cloud = XYZ_point_cloud[:,0:NUM_POINT,:]
 
     return XYZ_point_cloud, labels, labelsName
