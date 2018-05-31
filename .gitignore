@@ -32,7 +32,7 @@ build/
 [Oo]bj/
 log/
 
-modelnet40_ply_hdf5_2048/
+#modelnet40_ply_hdf5_2048
 vs15/
 vs17/
 __pycache__/
