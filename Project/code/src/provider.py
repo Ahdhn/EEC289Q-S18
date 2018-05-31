@@ -12,7 +12,8 @@ def load_h5(h5_filename):
   f = h5py.File(h5_filename)
   data = f['data'][:]
   label = f['label'][:]
-  return (data, label)
+  normal = f['normal'][:]
+  return (data, label, normal)
 
 def loadDataFile(filename):
   return load_h5(filename)

@@ -24,17 +24,20 @@ def PreparePointCloud(NUM_POINT):
     labelsName = provider.getDataFiles( \
     os.path.join(BASE_DIR, '../data/modelnet40_ply_hdf5_2048/shape_names.txt'))
 
-    XYZ_point_cloud, labels = provider.loadDataFile('../' + TRAIN_FILES[train_file_idxs[0]])
+    XYZ_point_cloud, labels, normals = provider.loadDataFile('../' + TRAIN_FILES[train_file_idxs[0]])
     for i in range(len(TRAIN_FILES) - 1):
-        xyz, lab = provider.loadDataFile('../' + TRAIN_FILES[train_file_idxs[i + 1]])
+        xyz, lab, norm = provider.loadDataFile('../' + TRAIN_FILES[train_file_idxs[i + 1]])
         XYZ_point_cloud = np.concatenate((XYZ_point_cloud, xyz))
         labels = np.concatenate((labels, lab))
+        normals = np.concatenate((normals, norm))
 
     for i in range(len(TEST_FILES)):
-        xyz, lab = provider.loadDataFile('../' + TEST_FILES[test_file_idxs[i]])
+        xyz, lab, norm = provider.loadDataFile('../' + TEST_FILES[test_file_idxs[i]])
         XYZ_point_cloud = np.concatenate((XYZ_point_cloud, xyz))
         labels = np.concatenate((labels, lab))    
-   
+        normals = np.concatenate((normals, norm))
+    
     XYZ_point_cloud = XYZ_point_cloud[:,0:NUM_POINT,:]
+    normals = normals[:,0:NUM_POINT,:]
 
-    return XYZ_point_cloud, labels, labelsName
+    return XYZ_point_cloud, labels, labelsName, normals
