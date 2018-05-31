@@ -37,7 +37,7 @@ def PreparePointCloud(NUM_POINT):
         labels = np.concatenate((labels, lab))    
         normals = np.concatenate((normals, norm))
     
-    XYZ_point_cloud = XYZ_point_cloud[:,0:NUM_POINT,:]
-    normals = normals[:,0:NUM_POINT,:]
+    #XYZ_point_cloud = XYZ_point_cloud[:,0:NUM_POINT,:]
+    #normals = normals[:,0:NUM_POINT,:]
 
     return XYZ_point_cloud, labels, labelsName, normals

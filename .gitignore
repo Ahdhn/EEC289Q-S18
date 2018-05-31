@@ -30,6 +30,7 @@ x64/
 build/
 [Bb]in/
 [Oo]bj/
+log/
 
 modelnet40_ply_hdf5_2048/
 vs15/

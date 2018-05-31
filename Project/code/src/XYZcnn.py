@@ -13,10 +13,9 @@ def XYZcnnMain():
     #plotModels(XYZ_point_cloud, labels, titles, 10, NUM_POINTS)
     #plotModelsWithLabel(XYZ_point_cloud, labels, titles, 10, NUM_POINTS, 0)
 
-    trainMain(num_points=NUM_POINTS,
-              XYZ_point_cloud=XYZ_point_cloud, labels=labels, 
+    trainMain(XYZ_point_cloud=XYZ_point_cloud, labels=labels, 
               XYZ_point_notmals = point_normals)
-    eval()
+    
 
 
 

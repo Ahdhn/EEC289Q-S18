@@ -1,8 +1,22 @@
 import tensorflow as tf
 import numpy as np
 import math
-
+import shutil
+import os
+import sys
+import random
 from util import KNN
+
+
+LOG_DIR = 'log'
+if not os.path.exists(LOG_DIR): 
+    os.mkdir(LOG_DIR)
+else:
+    shutil.rmtree(LOG_DIR)
+    os.mkdir(LOG_DIR)
+
+LOG_FOUT = open(os.path.join(LOG_DIR, 'log_train.txt'), 'w')
+
 
 ############################################################################
 ###### TF helper functions 
@@ -334,6 +348,10 @@ def createModel(points_pl, training, knn_graph, decay=None):
 
 ############################################################################
 ###### Training  
+def log_string(out_str):
+    LOG_FOUT.write(out_str+'\n')
+    LOG_FOUT.flush()
+    print(out_str)
 def get_loss(pred, label):
     #pred: b*num_classes
     #labels: b
@@ -341,12 +359,67 @@ def get_loss(pred, label):
     loss = tf.losses.softmax_cross_entropy(onehot_labels=labels, logits=pred, label_smoothing=0.2)
     classify_loss = tf.reduce_mean(loss)
     return classify_loss
-def trainMain(num_points, XYZ_point_cloud, labels, XYZ_point_notmals=None):
+
+def train_one_epoch(XYZ_point_cloud, 
+                    labels, 
+                    sess, 
+                    ops, 
+                    train_writer,
+                    batch_size=32,
+                    num_points=1024,
+                    XYZ_point_notmals=None):                    
+
+    #ops: dict mapping from string to tf ops
+    is_training = True
+    num_batches = XYZ_point_cloud.shape[0] // batch_size
+
+    total_correct = 0
+    total_seen = 0
+    loss_sum = 0
+
+
+    for batch_idx in range(num_batches):
+        start_idx = batch_idx * batch_size
+        end_idx = (batch_idx+1) * batch_size
+
+        #get this batch data and labels
+        current_data = XYZ_point_cloud[start_idx:end_idx,:,:]
+        current_label = labels[start_idx:end_idx]
+        if XYZ_point_notmals is not None:
+            current_normals = XYZ_point_notmals[start_idx:end_idx,:,:]
+
+        #sample random num_points of the data (does not affect the labels)        
+        rand_ids = random.sample(range(XYZ_point_cloud.shape[1]), num_points)
+        current_data = current_data[:,rand_ids,:]
+        if XYZ_point_notmals is not None:
+            current_normals = current_normals[:,rand_ids,:]
+
+        feed_dict = {ops['points_pl']:current_data,
+                     ops['labels_pl']:current_label,
+                     ops['is_training_pl']:is_training,}
+        summary, step, _, loss_val, pred_val = sess.run([ops['merged'], 
+                                                         ops['step'],
+                                                         ops['train_op'], 
+                                                         ops['loss'], 
+                                                         ops['pred']], 
+                                                        feed_dict=feed_dict)
+        train_writer.add_summary(summary,step)
+        pred_val = np.argmax(pred_val,1)
+        correct = np.sum(pred_val == current_label)
+        total_correct += correct
+        total_seen += batch_size
+        loss_sum += lloss_val
+    log_string('mean loss :%f'%(loss_sum/ float(num_batches)))
+    log_string('accuracy: %f'% (ttotal_correct/float(total_seen)))
+
+    
+
+def trainMain(XYZ_point_cloud, labels, XYZ_point_notmals=None):
     
     print("Training")
 
     batch_size = 32
-    #num_points = 1024
+    num_points = 1024
     pos_dim = 3
     max_epoch = 250
     learning_rate = 0.001
@@ -359,6 +432,8 @@ def trainMain(num_points, XYZ_point_cloud, labels, XYZ_point_notmals=None):
     num_classes = 40
 
     k=20
+    
+    LOG_DIR = "log/"
 
     bn_init_decay = 0.5
     bn_decay_decay_rate = 0.5
@@ -371,52 +446,84 @@ def trainMain(num_points, XYZ_point_cloud, labels, XYZ_point_notmals=None):
             points_pl = tf.placeholder(tf.float32, shape=(batch_size, num_points, pos_dim))
             labels_pl = tf.placeholder(tf.int32, shape=(batch_size))
             knn_graph =  KNN(pointcloud_pl=points_pl, k=k)
-            #is_training_pl = tf.placeholder(tf.bool, shape=())
-            #print(is_training_pl)
-            #
-            #batch = tf.Variable(0)
-            #bn_momentum = tf.train.exponential_decay(bn_init_decay,
-            #                                         batch*batch_size,
-            #                                         bn_decay_decay_step,
-            #                                         bn_decay_decay_rate,
-            #                                         staircase=True)
-            #bn_decay = tf.minimum(bn_decay_clip, 1 - bn_momentum)
-            #tf.summary.scalar('bn_decay', bn_decay)
-            #
-            ##create model, get loss
-            #pred, end_points = createModel(points_pl=points_pl, 
-            #                               training=is_training_pl, 
-            #                               knn_graph=knn_graph,
-            #                               decay=bn_decay)
-            #loss = get_loss(pred=pred, label=labels_pl)
-            #tf.summary.scalar('loss',loss)
-            #
-            #correct = tf.equal(tf.argmax(pred,1), tf.to_int64(labels_pl))
-            #accuracy = tf.reduce_sum(tf.cast(correct, tf.float32)) /float(batch_size)
-            #tf.summary.scalar('accuracy', accuracy)
-            #
-            ##training op
-            #learning_rate = tf.train.exponential_decay(learning_rate,  
-            #                                           batch * batch_size,
-            #                                           decay_step,        
-            #                                           decay_rate,        
-            #                                           staircase=True)
-            #learning_rate = tf.maximum(learning_rate, 0.00001) 
-            #tf.summary.scalar('learning_rate', learning_rate)
-            #opt = tf.train.AdadeltaOptimizer(learning_rate)
-            #train_op = opt.minimize(loss, global_step=batch)
-            #            
-            #saver = tf.train.Saver()
+            is_training_pl = tf.placeholder(tf.bool, shape=())
+            
+
+            batch = tf.Variable(0)
+            bn_momentum = tf.train.exponential_decay(bn_init_decay,
+                                                     batch*batch_size,
+                                                     bn_decay_decay_step,
+                                                     bn_decay_decay_rate,
+                                                     staircase=True)
+            bn_decay = tf.minimum(bn_decay_clip, 1 - bn_momentum)
+            tf.summary.scalar('bn_decay', bn_decay)
+
+            #create model, get loss
+            pred, end_points = createModel(points_pl=points_pl, 
+                                           training=is_training_pl, 
+                                           knn_graph=knn_graph,
+                                           decay=bn_decay)
+            loss = get_loss(pred=pred, label=labels_pl)
+            tf.summary.scalar('loss',loss)
+
+            correct = tf.equal(tf.argmax(pred,1), tf.to_int64(labels_pl))
+            accuracy = tf.reduce_sum(tf.cast(correct, tf.float32)) /float(batch_size)
+            tf.summary.scalar('accuracy', accuracy)
+
+            #training op
+            learning_rate = tf.train.exponential_decay(learning_rate,  
+                                                       batch * batch_size,
+                                                       decay_step,        
+                                                       decay_rate,        
+                                                       staircase=True)
+            learning_rate = tf.maximum(learning_rate, 0.00001) 
+            tf.summary.scalar('learning_rate', learning_rate)
+            opt = tf.train.AdadeltaOptimizer(learning_rate)
+            train_op = opt.minimize(loss, global_step=batch)
+                        
+            saver = tf.train.Saver()
 
         #session
-        #config = tf.ConfigProto()
-        #config.gpu_options.allow_growth = True
-        #config.allow_soft_placement = False
-        #config.log_device_placement = False
-        #sess = tf.Session(config=config)
-        #
-        #merged = tf.summary.merge_all()
-        #train_writer = tf.summary.FileWriter('')
+        config = tf.ConfigProto()
+        config.gpu_options.allow_growth = True
+        config.allow_soft_placement = True
+        config.log_device_placement = False
+        sess = tf.Session(config=config)
+
+        merged = tf.summary.merge_all()
+        train_writer = tf.summary.FileWriter('log/')
+        #test_writer = tf.summary.FileWriter('log/')
+
+        #init var
+        init = tf.global_variables_initializer()
+        sess.run(init,{is_training_pl:True})
+
+        ops ={'points_pl':points_pl,
+              'labels_pl':labels_pl,
+              'is_training_pl': is_training_pl,
+              'pred': pred,
+              'loss':loss,
+              'train_op': train_op,
+              'merged':merged,
+              'step':batch}
+        for epoch in range(max_epoch):
+            log_string('***** EPOCH %03d *****' %(epoch))
+            sys.stdout.flush()
+
+            train_one_epoch(XYZ_point_cloud = XYZ_point_cloud, 
+                            labels = labels, 
+                            sess = sess, 
+                            ops = ops, 
+                            train_writer=train_writer,
+                            batch_size=batch_size,
+                            num_points=num_points,
+                            XYZ_point_notmals=XYZ_point_notmals)
+            
+            #eval_one_epoch(sess, ops, test_writer)
+
+            if epoch %5 == 0:
+              save_path = saver.save(sess,LOG_DIR+ "model.ckpt"+str (epoch))
+              log_string("Model saved in file: %s" % save_path)
 
 
             
