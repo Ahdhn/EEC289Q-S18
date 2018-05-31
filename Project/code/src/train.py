@@ -7,7 +7,7 @@ import sys
 import random
 from util import KNN
 
-
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'#filter out warning 
 LOG_DIR = 'log'
 if not os.path.exists(LOG_DIR): 
     os.mkdir(LOG_DIR)
@@ -218,12 +218,12 @@ def edgeConv(points_pl, knn_graph, k=20):
 
 ############################################################################
 ###### Model creation 
-def createModel(points_pl, training, knn_graph, decay=None):
+def createModel(points_pl, training, knn_graph, k=20, decay=None):
     #input_points is a placeholder 
     batch_size = points_pl.get_shape()[0].value
     num_pts = points_pl.get_shape()[1].value    
     end_points = {}
-    k=20
+    
 
     #get features 
     edgeFeatures = edgeConv(points_pl=points_pl, knn_graph=knn_graph, k=k)
@@ -391,6 +391,7 @@ def train_one_epoch(XYZ_point_cloud,
         #sample random num_points of the data (does not affect the labels)        
         rand_ids = random.sample(range(XYZ_point_cloud.shape[1]), num_points)
         current_data = current_data[:,rand_ids,:]
+        current_label = np.squeeze(current_label)
         if XYZ_point_notmals is not None:
             current_normals = current_normals[:,rand_ids,:]
 
@@ -408,18 +409,77 @@ def train_one_epoch(XYZ_point_cloud,
         correct = np.sum(pred_val == current_label)
         total_correct += correct
         total_seen += batch_size
-        loss_sum += lloss_val
+        loss_sum += loss_val
     log_string('mean loss :%f'%(loss_sum/ float(num_batches)))
-    log_string('accuracy: %f'% (ttotal_correct/float(total_seen)))
+    log_string('accuracy: %f'% (total_correct/float(total_seen)))
 
-    
+def eval_one_epoch(XYZ_point_cloud, 
+                   labels,
+                   sess,
+                   ops,                 
+                   batch_size=32,
+                   num_points=1024,
+                   num_classes=40):
+    #ops is a dict mapping from string to ops
+    is_training = True
+    total_correct = 0
+    total_seen = 0
+    loss_sum = 0
+    total_seen_class = [0 for _ in range(num_classes)]
+    total_correct_class = [0 for _ in range(num_classes)]
+
+    num_batches = XYZ_point_cloud.shape[0] // batch_size
+    labels = np.squeeze(labels)
+
+    for batch_idx in range(num_batches):
+        start_idx = batch_idx * batch_size
+        end_idx = (batch_idx+1) * batch_size
+
+        #get this batch data and labels
+        current_data = XYZ_point_cloud[start_idx:end_idx,:,:]        
+        current_label = labels[start_idx:end_idx]
+        
+        rand_ids = random.sample(range(XYZ_point_cloud.shape[1]), num_points)
+        current_data = current_data[:,rand_ids,:]
+        #current_label = np.squeeze(current_label)
+
+        feed_dict = {ops['points_pl']: current_data,
+                     ops['labels_pl']: current_label,
+                     ops['is_training_pl']: is_training}
+        summary, step, loss_val, pred_val = sess.run([ops['merged'], 
+                                                      ops['step'],
+                                                      ops['loss'], 
+                                                      ops['pred']], 
+                                                     feed_dict=feed_dict)
+        pred_val = np.argmax(pred_val,1)
+        correct = np.sum(pred_val == current_label[start_idx:end_idx])
+        total_correct += correct
+        total_seen += batch_size
+        loss_sum += (loss_val*batch_size)
+        for i in range(start_idx, end_idx):
+                l = labels[i]
+                total_seen_class[l] += 1
+                total_correct_class[l] += (pred_val[i-start_idx] == l)
+
+    log_string('eval mean loss: %f' % (loss_sum / float(total_seen)))
+    log_string('eval accuracy: %f'% (total_correct / float(total_seen)))
+    log_string('eval avg class acc: %f' % (np.mean(np.array(total_correct_class)/np.array(total_seen_class,dtype=np.float))))
+
 
 def trainMain(XYZ_point_cloud, labels, XYZ_point_notmals=None):
     
     print("Training")
 
+    train_ids = list(range(0,9840))
+    test_ids = list(range(9840,XYZ_point_cloud.shape[0]))
+
+    #train_ids = list(range(0,10))
+    #test_ids = list(range(10,20))
+
     batch_size = 32
     num_points = 1024
+    k=20    
+
     pos_dim = 3
     max_epoch = 250
     learning_rate = 0.001
@@ -431,7 +491,7 @@ def trainMain(XYZ_point_cloud, labels, XYZ_point_notmals=None):
     max_num_point = 2048
     num_classes = 40
 
-    k=20
+    
     
     LOG_DIR = "log/"
 
@@ -440,8 +500,7 @@ def trainMain(XYZ_point_cloud, labels, XYZ_point_notmals=None):
     bn_decay_decay_step = float(decay_step)
     bn_decay_clip = 0.99
 
-    with tf.Graph().as_default():
-        #Model(XYZ_point_cloud, labels, batch_size, pos_dim, num_point)
+    with tf.Graph().as_default():       
         with tf.device('/gpu:'+str(gpu)):
             points_pl = tf.placeholder(tf.float32, shape=(batch_size, num_points, pos_dim))
             labels_pl = tf.placeholder(tf.int32, shape=(batch_size))
@@ -462,6 +521,7 @@ def trainMain(XYZ_point_cloud, labels, XYZ_point_notmals=None):
             pred, end_points = createModel(points_pl=points_pl, 
                                            training=is_training_pl, 
                                            knn_graph=knn_graph,
+                                           k=k,
                                            decay=bn_decay)
             loss = get_loss(pred=pred, label=labels_pl)
             tf.summary.scalar('loss',loss)
@@ -510,29 +570,26 @@ def trainMain(XYZ_point_cloud, labels, XYZ_point_notmals=None):
             log_string('***** EPOCH %03d *****' %(epoch))
             sys.stdout.flush()
 
-            train_one_epoch(XYZ_point_cloud = XYZ_point_cloud, 
-                            labels = labels, 
+            train_one_epoch(XYZ_point_cloud = XYZ_point_cloud[train_ids,:,:], 
+                            labels = labels[train_ids], 
                             sess = sess, 
                             ops = ops, 
                             train_writer=train_writer,
                             batch_size=batch_size,
                             num_points=num_points,
-                            XYZ_point_notmals=XYZ_point_notmals)
+                            XYZ_point_notmals=XYZ_point_notmals[train_ids,:,:])
             
-            #eval_one_epoch(sess, ops, test_writer)
+            eval_one_epoch(XYZ_point_cloud = XYZ_point_cloud[test_ids,:,:], 
+                           labels = labels[test_ids],
+                           sess = sess,
+                           ops = ops,                          
+                           batch_size=batch_size,
+                           num_points=num_points,
+                           num_classes=num_classes)
 
             if epoch %5 == 0:
               save_path = saver.save(sess,LOG_DIR+ "model.ckpt"+str (epoch))
-              log_string("Model saved in file: %s" % save_path)
-
-
-            
-
-
-
-    
-
-    
+              log_string("Model saved in file: %s" % save_path)    
 ############################################################################
 ###### Testing 
 def testModel():
