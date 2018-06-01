@@ -7,7 +7,7 @@ import sys
 import random
 from util import KNN
 
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'#filter out warning 
+#os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'#filter out warning 
 LOG_DIR = 'log'
 if not os.path.exists(LOG_DIR): 
     os.mkdir(LOG_DIR)
@@ -31,7 +31,7 @@ def variable_weight_decay(name, shape,stddev, weight_decay, use_xavier=True):
         init = tf.contrib.layers.xavier_initializer()
     else:
         init = tf.truncated_normal_initializer(stddev = stddev)
-    var = VarCPU(name, shape, init)
+    var = VarCPU(name = name,shape= shape,init= init)
     if weight_decay is not None:
         decay = tf.multiply(tf.nn.l2_loss(var), weight_decay, name='weight_loss')
         tf.add_to_collection('losses', decay)
@@ -43,10 +43,10 @@ def batch_norm_dist(inputs, training, scope, moments_dims, decay):
 
     with tf.variable_scope(scope)as sc:
         num_channels = inputs.get_shape()[-1].value
-        beta = VarCPU('beta',[num_channels], init=tf.zeros_initializer())
-        gamma = VarCPU('gamma',[num_channels], init=tf.ones_initializer())
-        pop_mean = VarCPU('pop_mean', [num_channels], init=tf.zeros_initializer(),train=False)
-        pop_var = VarCPU('pop_var', [num_channels], init=tf.ones_initializer(),train=False)
+        beta = VarCPU(name = 'beta',shape = [num_channels], init=tf.zeros_initializer())
+        gamma = VarCPU(name = 'gamma',shape = [num_channels], init=tf.ones_initializer())
+        pop_mean = VarCPU(name = 'pop_mean', shape = [num_channels], init=tf.zeros_initializer(),train=False)
+        pop_var = VarCPU(name = 'pop_var', shape= [num_channels], init=tf.ones_initializer(),train=False)
 
         def train_bn_op():
             batch_mean, batch_var = tf.nn.moments(inputs, moments_dims, name = 'moments')
@@ -58,7 +58,7 @@ def batch_norm_dist(inputs, training, scope, moments_dims, decay):
         def test_bn_op():
             return tf.nn.batch_normalization(inputs, pop_mean, pop_var,beta, gamma, 1e-3)
 
-        normed = tf.cond(training,train_bn_op,test_bn_op())
+        normed = tf.cond(training,train_bn_op,test_bn_op)
         return normed
 def batch_norm(inputs, training, scope, moments_dim, decay):
     #batch normalization on conv maps 
@@ -146,6 +146,7 @@ def fully_connected(inputs,
         num_input_units = inputs.get_shape()[-1].value
         weights = variable_weight_decay('weights', 
                                         shape= [num_input_units, num_outputs],
+                                        use_xavier=use_xavier,
                                         stddev=stddev,
                                         weight_decay=weight_decay)
         outputs = tf.matmul(inputs,weights)
@@ -221,8 +222,7 @@ def edgeConv(points_pl, knn_graph, k=20):
 def createModel(points_pl, training, knn_graph, k=20, decay=None):
     #input_points is a placeholder 
     batch_size = points_pl.get_shape()[0].value
-    num_pts = points_pl.get_shape()[1].value    
-    end_points = {}
+    num_pts = points_pl.get_shape()[1].value       
     
 
     #get features 
@@ -239,7 +239,7 @@ def createModel(points_pl, training, knn_graph, k=20, decay=None):
                  bn=True, 
                  decay=decay,
                  training=training)
-    net =tf.reduce_max(net, axis=-2, keepdims=True)
+    net =tf.reduce_max(net, axis=-2, keep_dims=True)
     net1 = net
     #print(net1)
 
@@ -253,7 +253,7 @@ def createModel(points_pl, training, knn_graph, k=20, decay=None):
                  bn=True, 
                  decay=decay,
                  training=training)
-    net = tf.reduce_mean(net, axis=-2, keepdims=True)
+    net = tf.reduce_max(net, axis=-2, keepdims=True)
     net2 = net
     #print(net2)
 
@@ -267,7 +267,7 @@ def createModel(points_pl, training, knn_graph, k=20, decay=None):
                  bn=True, 
                  decay=decay,
                  training=training)   
-    net = tf.reduce_mean(net, axis=-2, keepdims=True)
+    net = tf.reduce_max(net, axis=-2, keepdims=True)
     net3 = net
     #print(net3)
     #conv4
@@ -280,9 +280,11 @@ def createModel(points_pl, training, knn_graph, k=20, decay=None):
                  bn=True, 
                  decay=decay,
                  training=training)   
-    net = tf.reduce_mean(net, axis=-2, keepdims=True)
+    net = tf.reduce_max(net, axis=-2, keepdims=True)
     net4 = net
     #print(net4)
+
+
 
     #agg
     net = conv2d(inputs= tf.concat([net1, net2, net3, net4], axis=-1),
@@ -294,7 +296,7 @@ def createModel(points_pl, training, knn_graph, k=20, decay=None):
                  bn=True, 
                  decay=decay,
                  training=training)   
-    net = tf.reduce_mean(net, axis=-2, keepdims=True)
+    net = tf.reduce_max(net, axis=-2, keepdims=True)
     agg = net
     #print(agg)
 
@@ -344,7 +346,7 @@ def createModel(points_pl, training, knn_graph, k=20, decay=None):
                           training = training)
     #print(net)
 
-    return net, end_points
+    return net
 
 ############################################################################
 ###### Training  
@@ -483,7 +485,7 @@ def trainMain(XYZ_point_cloud, labels, XYZ_point_notmals=None):
     pos_dim = 3
     max_epoch = 250
     learning_rate = 0.001
-    gpu = 0
+    gpu = 1
     momentum = 0.9
     optimizer = 'adam'
     decay_step = 200000
@@ -518,11 +520,11 @@ def trainMain(XYZ_point_cloud, labels, XYZ_point_notmals=None):
             tf.summary.scalar('bn_decay', bn_decay)
 
             #create model, get loss
-            pred, end_points = createModel(points_pl=points_pl, 
-                                           training=is_training_pl, 
-                                           knn_graph=knn_graph,
-                                           k=k,
-                                           decay=bn_decay)
+            pred = createModel(points_pl=points_pl, 
+                               training=is_training_pl, 
+                               knn_graph=knn_graph,
+                               k=k,
+                               decay=bn_decay)
             loss = get_loss(pred=pred, label=labels_pl)
             tf.summary.scalar('loss',loss)
 
@@ -538,7 +540,7 @@ def trainMain(XYZ_point_cloud, labels, XYZ_point_notmals=None):
                                                        staircase=True)
             learning_rate = tf.maximum(learning_rate, 0.00001) 
             tf.summary.scalar('learning_rate', learning_rate)
-            opt = tf.train.AdadeltaOptimizer(learning_rate)
+            opt = tf.train.AdamOptimizer(learning_rate)
             train_op = opt.minimize(loss, global_step=batch)
                         
             saver = tf.train.Saver()
@@ -551,8 +553,8 @@ def trainMain(XYZ_point_cloud, labels, XYZ_point_notmals=None):
         sess = tf.Session(config=config)
 
         merged = tf.summary.merge_all()
-        train_writer = tf.summary.FileWriter('log/')
-        #test_writer = tf.summary.FileWriter('log/')
+        train_writer = tf.summary.FileWriter('log/',sess.graph)
+        
 
         #init var
         init = tf.global_variables_initializer()
@@ -611,7 +613,7 @@ def testModel():
         points_pl = tf.placeholder(tf.float32, shape=(batch_size, num_pts, dim))
         labels_pl = tf.placeholder(tf.int32, shape=(batch_size))
         knn_graph =  KNN(pointcloud_pl=points_pl, k=20)
-        pos, features = createModel(points_pl=points_pl,training=tf.constant(True),knn_graph=knn_graph)
+        pos= createModel(points_pl=points_pl,training=tf.constant(True),knn_graph=knn_graph)
         
         with tf.Session() as sess:
             sess.run(tf.global_variables_initializer())

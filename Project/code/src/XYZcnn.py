@@ -1,10 +1,14 @@
-from train import trainMain
-from PrepPC import PreparePointCloud
-from plotter import plotModels
-from plotter import plotModelsWithLabel
-
+import tensorflow as tf 
 import numpy as np
 
+from train import trainMain
+from PrepPC import PreparePointCloud
+import pandas as pd
+#from plotter import plotModels
+#from plotter import plotModelsWithLabel
+
+from tensorflow.python.client import device_lib
+print(device_lib.list_local_devices())
 
 def XYZcnnMain():
     NUM_POINTS = 128
