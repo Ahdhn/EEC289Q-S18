@@ -253,7 +253,7 @@ def createModel(points_pl, training, knn_graph, k=20, decay=None):
                  bn=True, 
                  decay=decay,
                  training=training)
-    net = tf.reduce_max(net, axis=-2, keepdims=True)
+    net = tf.reduce_max(net, axis=-2, keep_dims=True)
     net2 = net
     #print(net2)
 
@@ -267,7 +267,7 @@ def createModel(points_pl, training, knn_graph, k=20, decay=None):
                  bn=True, 
                  decay=decay,
                  training=training)   
-    net = tf.reduce_max(net, axis=-2, keepdims=True)
+    net = tf.reduce_max(net, axis=-2, keep_dims=True)
     net3 = net
     #print(net3)
     #conv4
@@ -280,7 +280,7 @@ def createModel(points_pl, training, knn_graph, k=20, decay=None):
                  bn=True, 
                  decay=decay,
                  training=training)   
-    net = tf.reduce_max(net, axis=-2, keepdims=True)
+    net = tf.reduce_max(net, axis=-2, keep_dims=True)
     net4 = net
     #print(net4)
 
@@ -296,7 +296,7 @@ def createModel(points_pl, training, knn_graph, k=20, decay=None):
                  bn=True, 
                  decay=decay,
                  training=training)   
-    net = tf.reduce_max(net, axis=-2, keepdims=True)
+    net = tf.reduce_max(net, axis=-2, keep_dims=True)
     agg = net
     #print(agg)
 
@@ -485,7 +485,7 @@ def trainMain(XYZ_point_cloud, labels, XYZ_point_notmals=None):
     pos_dim = 3
     max_epoch = 250
     learning_rate = 0.001
-    gpu = 1
+    gpu = 3
     momentum = 0.9
     optimizer = 'adam'
     decay_step = 200000
@@ -503,7 +503,7 @@ def trainMain(XYZ_point_cloud, labels, XYZ_point_notmals=None):
     bn_decay_clip = 0.99
 
     with tf.Graph().as_default():       
-        with tf.device('/gpu:'+str(gpu)):
+        with tf.device('/device:GPU:'+str(gpu)):
             points_pl = tf.placeholder(tf.float32, shape=(batch_size, num_points, pos_dim))
             labels_pl = tf.placeholder(tf.int32, shape=(batch_size))
             knn_graph =  KNN(pointcloud_pl=points_pl, k=k)
@@ -547,8 +547,9 @@ def trainMain(XYZ_point_cloud, labels, XYZ_point_notmals=None):
 
         #session
         config = tf.ConfigProto()
-        config.gpu_options.allow_growth = True
-        config.allow_soft_placement = True
+        config.gpu_options.allow_growth = False
+        config.gpu_options.per_process_gpu_memory_fraction = 0.8
+        config.allow_soft_placement = True        
         config.log_device_placement = False
         sess = tf.Session(config=config)
 
@@ -593,34 +594,8 @@ def trainMain(XYZ_point_cloud, labels, XYZ_point_notmals=None):
               save_path = saver.save(sess,LOG_DIR+ "model.ckpt"+str (epoch))
               log_string("Model saved in file: %s" % save_path)    
 ############################################################################
-###### Testing 
-def testModel():
-    #testing the model by generating random points
-    batch_size=2
-    num_pts = 124
-    dim=3
+###### Main 
 
-    #generate random points, assigne labels to them as 1 and 0
-    input_points = np.random.rand(batch_size, num_pts, dim)
-    labels = np.random.rand(batch_size)
-    labels[labels >=0.5]=1
-    labels[labels <0.5]=0
-    #cast to int 
-    labels = labels.astype(np.int32) 
-
-    with tf.Graph().as_default():#not needed but it is a good practice 
-        #placeholder for the points 
-        points_pl = tf.placeholder(tf.float32, shape=(batch_size, num_pts, dim))
-        labels_pl = tf.placeholder(tf.int32, shape=(batch_size))
-        knn_graph =  KNN(pointcloud_pl=points_pl, k=20)
-        pos= createModel(points_pl=points_pl,training=tf.constant(True),knn_graph=knn_graph)
-        
-        with tf.Session() as sess:
-            sess.run(tf.global_variables_initializer())
-            feed_dict = {points_pl:input_points, labels_pl:labels}
-            res1, res2 =sess.run([pos, features], feed_dict=feed_dict)
-            print(res1.shape)
-            print(res1) 
 if __name__ == "__main__":    
 
     if False:

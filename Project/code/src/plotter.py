@@ -23,30 +23,30 @@ def plotModels(dataSet, labels, titles, N, n):
     plt.show()
 
 
-def plotModelsWithLabel(dataSet, labels, titles, N, n, labelId):
-    fig = plt.figure()
-    fig.suptitle(titles[labelId], fontsize=16)
+#def plotModelsWithLabel(dataSet, labels, titles, N, n, labelId):
+#    fig = plt.figure()
+#    fig.suptitle(titles[labelId], fontsize=16)
 
-    gs = gridspec.GridSpec(int(math.sqrt(N)+1), int(math.sqrt(N)+1)) 
+#    gs = gridspec.GridSpec(int(math.sqrt(N)+1), int(math.sqrt(N)+1)) 
 
-    iFig = 0
-    for i in range(len(dataSet)):
-        if(labels[i][0] == labelId):
-            pts = dataSet[i]
-            ax = plt.subplot(gs[iFig], projection = '3d')
-            ax.scatter(dataSet[i][0:n, [0]], dataSet[i][0:n, [1]], dataSet[i][0:n, [2]], s = 1)
-            ax.set_axis_off()
-            iFig = iFig + 1
-            if iFig == N:
-                break
+#    iFig = 0
+#    for i in range(len(dataSet)):
+#        if(labels[i][0] == labelId):
+#            pts = dataSet[i]
+#            ax = plt.subplot(gs[iFig], projection = '3d')
+#            ax.scatter(dataSet[i][0:n, [0]], dataSet[i][0:n, [1]], dataSet[i][0:n, [2]], s = 1)
+#            ax.set_axis_off()
+#            iFig = iFig + 1
+#            if iFig == N:
+#                break
 
-    plt.tight_layout()
+#    plt.tight_layout()
 
-    plt.show()
+#    plt.show()
 
-def plotPtsArray(pts, n):
-    fig = plt.figure()
-    ax = fig.add_subplot(111, projection = '3d')
-    ax.scatter(pts[0:n, [0]], pts[0:n, [1]], pts[0:n, [2]], s = 1)
-    ax.set_axis_off();
-    plt.show()
+#def plotPtsArray(pts, n):
+#    fig = plt.figure()
+#    ax = fig.add_subplot(111, projection = '3d')
+#    ax.scatter(pts[0:n, [0]], pts[0:n, [1]], pts[0:n, [2]], s = 1)
+#    ax.set_axis_off();
+#    plt.show()

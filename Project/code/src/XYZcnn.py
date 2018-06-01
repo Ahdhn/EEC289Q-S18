@@ -4,6 +4,11 @@ import numpy as np
 from train import trainMain
 from PrepPC import PreparePointCloud
 import pandas as pd
+
+import os
+os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID" # so the IDs match nvidia-smi
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+
 #from plotter import plotModels
 #from plotter import plotModelsWithLabel
 
