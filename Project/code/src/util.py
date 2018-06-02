@@ -41,4 +41,11 @@ def KNN(pointcloud_pl, k):
     adj_matrix = pairwise_distance(pointcloud_pl)
     nn_idx = knn(adj_matrix, k=k)
 
-    return nn_idx 
+    return nn_idx
+
+def dotProduct(matA, matB, N):
+    reshapedA = matA.reshape(N,3)
+    dotRes = np.empty(N)
+    for i in range(N):
+        dotRes[i] = np.dot(reshapedA[i], matB[i])
+    return dotRes;
