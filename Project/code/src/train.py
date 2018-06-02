@@ -219,6 +219,149 @@ def edgeConv(points_pl, knn_graph, k=20):
 
 ############################################################################
 ###### Model creation 
+def createModel_Dyn(points_pl, 
+	                training,
+	                knn10_graph,
+	                knn20_graph,
+	                knn30_graph,
+	                knn40_graph,
+	                knn50_graph,
+	                knn60_graph,
+	                decay=None):
+
+    #input_points is a placeholder 
+    batch_size = points_pl.get_shape()[0].value
+    num_pts = points_pl.get_shape()[1].value       
+    
+
+    #get features 
+    #edgeFeatures = edgeConv(points_pl=points_pl, knn_graph=knn_graph, k=k)
+    edgeFeatures10 = edgeConv(points_pl=points_pl, knn_graph=knn10_graph, k=10)
+    edgeFeatures20 = edgeConv(points_pl=points_pl, knn_graph=knn20_graph, k=20)
+    edgeFeatures30 = edgeConv(points_pl=points_pl, knn_graph=knn30_graph, k=30)
+    edgeFeatures40 = edgeConv(points_pl=points_pl, knn_graph=knn40_graph, k=40)
+    edgeFeatures50 = edgeConv(points_pl=points_pl, knn_graph=knn50_graph, k=50)
+    edgeFeatures60 = edgeConv(points_pl=points_pl, knn_graph=knn60_graph, k=60)
+
+    
+    #conv1 
+    net = conv2d(inputs= edgeFeatures10,
+                 num_output_channels=64,
+                 kernel_size=[1,1],
+                 scope='xyzcnn1',
+                 padding='VALID',
+                 stride=[1,1], 
+                 bn=True, 
+                 decay=decay,
+                 training=training)
+    net =tf.reduce_max(net, axis=-2, keep_dims=True)
+    net1 = net
+    #print(net1)
+
+    #conv2
+    net = conv2d(inputs= edgeFeatures20,
+                 num_output_channels=64,
+                 kernel_size=[1,1],
+                 scope='xyzcnn2',
+                 padding='VALID',
+                 stride=[1,1], 
+                 bn=True, 
+                 decay=decay,
+                 training=training)
+    net = tf.reduce_max(net, axis=-2, keep_dims=True)
+    net2 = net
+    #print(net2)
+
+    #conv3
+    net = conv2d(inputs= edgeFeatures30,
+                 num_output_channels=64,
+                 kernel_size=[1,1],
+                 scope='xyzcnn3',
+                 padding='VALID',
+                 stride=[1,1], 
+                 bn=True, 
+                 decay=decay,
+                 training=training)   
+    net = tf.reduce_max(net, axis=-2, keep_dims=True)
+    net3 = net
+    #print(net3)
+    #conv4
+    net = conv2d(inputs= edgeFeatures40,
+                 num_output_channels=128,
+                 kernel_size=[1,1],
+                 scope='xyzcnn4',
+                 padding='VALID',
+                 stride=[1,1], 
+                 bn=True, 
+                 decay=decay,
+                 training=training)   
+    net = tf.reduce_max(net, axis=-2, keep_dims=True)
+    net4 = net
+    #print(net4)
+
+
+
+    #agg
+    net = conv2d(inputs= tf.concat([net1, net2, net3, net4], axis=-1),
+                 num_output_channels=1024,
+                 kernel_size=[1,1],
+                 scope='agg',
+                 padding='VALID',
+                 stride=[1,1], 
+                 bn=True, 
+                 decay=decay,
+                 training=training)   
+    net = tf.reduce_max(net, axis=-2, keep_dims=True)
+    agg = net
+    #print(agg)
+
+    ### MLP
+    #reshape
+    net = tf.reshape(net, [batch_size,-1])
+    #print(net)
+
+    #FC1    
+    net = fully_connected(inputs = net,
+                          num_outputs= 512,
+                          scope = 'fc1',                          
+                          bn=True,
+                          decay= decay,
+                          training = training)
+    #print(net)
+
+    #dp1
+    net = dropout(inputs=net, 
+                  training=training,
+                  scope='dp1',
+                  keep_prod=0.5)
+    #print(net)
+
+    #FC2
+    net = fully_connected(inputs = net,
+                          num_outputs= 256,
+                          scope = 'fc2',                          
+                          bn=True,
+                          decay= decay,
+                          training = training)
+    #print(net)
+
+    #dp2
+    net = dropout(inputs=net, 
+                  training=training,
+                  scope='dp2',
+                  keep_prod=0.5)
+    #print(net)
+
+    #FC3
+    net = fully_connected(inputs = net,
+                          num_outputs= 40,
+                          scope = 'fc3',                          
+                          bn=True,
+                          decay= decay,
+                          training = training)
+    #print(net)
+
+    return net
 def createModel(points_pl, training, knn_graph, k=20, decay=None):
     #input_points is a placeholder 
     batch_size = points_pl.get_shape()[0].value
@@ -227,7 +370,6 @@ def createModel(points_pl, training, knn_graph, k=20, decay=None):
 
     #get features 
     edgeFeatures = edgeConv(points_pl=points_pl, knn_graph=knn_graph, k=k)
-
     
     #conv1 
     net = conv2d(inputs= edgeFeatures,
@@ -493,6 +635,7 @@ def trainMain(XYZ_point_cloud, labels, XYZ_point_notmals=None):
     max_num_point = 2048
     num_classes = 40
 
+    Dyn = True
     
     
     LOG_DIR = "log/"
@@ -506,7 +649,17 @@ def trainMain(XYZ_point_cloud, labels, XYZ_point_notmals=None):
         with tf.device('/device:GPU:'+str(gpu)):
             points_pl = tf.placeholder(tf.float32, shape=(batch_size, num_points, pos_dim))
             labels_pl = tf.placeholder(tf.int32, shape=(batch_size))
-            knn_graph =  KNN(pointcloud_pl=points_pl, k=k)
+            
+            if(Dyn):
+            	knn10_graph =  KNN(pointcloud_pl=points_pl, k=10)
+            	knn20_graph =  KNN(pointcloud_pl=points_pl, k=20)
+            	knn30_graph =  KNN(pointcloud_pl=points_pl, k=30)
+            	knn40_graph =  KNN(pointcloud_pl=points_pl, k=40)
+            	knn50_graph =  KNN(pointcloud_pl=points_pl, k=50)
+            	knn60_graph =  KNN(pointcloud_pl=points_pl, k=60)
+            else:
+            	knn_graph =  KNN(pointcloud_pl=points_pl, k=k)
+            
             is_training_pl = tf.placeholder(tf.bool, shape=())
             
 
@@ -520,11 +673,22 @@ def trainMain(XYZ_point_cloud, labels, XYZ_point_notmals=None):
             tf.summary.scalar('bn_decay', bn_decay)
 
             #create model, get loss
-            pred = createModel(points_pl=points_pl, 
-                               training=is_training_pl, 
-                               knn_graph=knn_graph,
-                               k=k,
-                               decay=bn_decay)
+            if Dyn:
+            	pred = createModel_Dyn(points_pl=points_pl, 
+                	               	   training=is_training_pl,                     	               
+                        	           knn10_graph=knn10_graph,
+                        	           knn20_graph=knn20_graph,
+                        	           knn30_graph=knn30_graph,
+                        	           knn40_graph=knn40_graph,
+                        	           knn50_graph=knn50_graph,
+                        	           knn60_graph=knn60_graph,                        	           
+                            	       decay=bn_decay)
+            else:
+            	pred = createModel(points_pl=points_pl, 
+                	               training=is_training_pl, 
+                    	           knn_graph=knn_graph,
+                        	       k=k,
+                            	   decay=bn_decay)
             loss = get_loss(pred=pred, label=labels_pl)
             tf.summary.scalar('loss',loss)
 
