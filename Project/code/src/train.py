@@ -565,7 +565,7 @@ def eval_one_epoch(XYZ_point_cloud,
                    num_points=1024,
                    num_classes=40):
     #ops is a dict mapping from string to ops
-    is_training = True
+    is_training = False
     total_correct = 0
     total_seen = 0
     loss_sum = 0
