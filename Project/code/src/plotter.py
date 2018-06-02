@@ -8,9 +8,7 @@ from matplotlib import gridspec
 def plotModels(dataSet, labels, titles, N, n):
     fig = plt.figure()
     gs = gridspec.GridSpec(int(math.sqrt(N)+1), int(math.sqrt(N)+1)) 
-
-    numRows = 4
-    numColumns = 4
+        
     for i in range(0, N):
         pts = dataSet[i]
         ax = plt.subplot(gs[i], projection = '3d')

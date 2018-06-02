@@ -7,7 +7,7 @@ import sys
 import random
 from util import KNN
 
-#os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'#filter out warning 
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'#filter out warning 
 LOG_DIR = 'log'
 if not os.path.exists(LOG_DIR): 
     os.mkdir(LOG_DIR)
@@ -596,7 +596,7 @@ def eval_one_epoch(XYZ_point_cloud,
                                                       ops['pred']], 
                                                      feed_dict=feed_dict)
         pred_val = np.argmax(pred_val,1)
-        correct = np.sum(pred_val == current_label[start_idx:end_idx])
+        correct = np.sum(pred_val == current_label)
         total_correct += correct
         total_seen += batch_size
         loss_sum += (loss_val*batch_size)
@@ -625,7 +625,7 @@ def trainMain(XYZ_point_cloud, labels, XYZ_point_notmals=None):
     k=20    
 
     pos_dim = 3
-    max_epoch = 250
+    max_epoch = 2000
     learning_rate = 0.001
     gpu = 3
     momentum = 0.9
@@ -754,7 +754,7 @@ def trainMain(XYZ_point_cloud, labels, XYZ_point_notmals=None):
                            num_points=num_points,
                            num_classes=num_classes)
 
-            if epoch %5 == 0:
+            if epoch %50 == 0:
               save_path = saver.save(sess,LOG_DIR+ "model.ckpt"+str (epoch))
               log_string("Model saved in file: %s" % save_path)    
 ############################################################################

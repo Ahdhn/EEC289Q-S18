@@ -31,7 +31,7 @@ build/
 [Bb]in/
 [Oo]bj/
 log/
-
+dgCNN/
 #modelnet40_ply_hdf5_2048
 vs15/
 vs17/
