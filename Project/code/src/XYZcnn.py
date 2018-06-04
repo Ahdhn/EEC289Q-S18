@@ -9,7 +9,7 @@ import os
 os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID" # so the IDs match nvidia-smi
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
-from plotter import plotModels
+#from plotter import plotModels
 #from plotter import plotModelsWithLabel
 
 from tensorflow.python.client import device_lib
