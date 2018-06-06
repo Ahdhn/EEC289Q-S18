@@ -6,6 +6,7 @@ import os
 import sys
 import random
 from util import KNN
+from tqdm import tqdm
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'#filter out warning 
 LOG_DIR = 'log'
@@ -522,7 +523,8 @@ def train_one_epoch(XYZ_point_cloud,
     loss_sum = 0
 
 
-    for batch_idx in range(num_batches):
+    #for batch_idx in range(num_batches):
+    for batch_idx in tqdm(range(num_batches)):
         start_idx = batch_idx * batch_size
         end_idx = (batch_idx+1) * batch_size
 
