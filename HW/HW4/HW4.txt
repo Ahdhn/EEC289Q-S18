@@ -1,0 +1,10 @@
+Convolution and Pooling exercise:
+
+http://ufldl.stanford.edu/tutorial/supervised/ExerciseConvolutionAndPooling/ (Links to an external site.)Links to an external site.
+
+Convolutional Neural Network exercise:
+
+http://ufldl.stanford.edu/tutorial/supervised/ExerciseConvolutionalNeuralNetwork/ (Links to an external site.)Links to an external site.
+
+ 
+

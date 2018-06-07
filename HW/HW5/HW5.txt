@@ -1,0 +1,3 @@
+the tutorial exercise on dimension reduction using PCA and whitening:
+
+http://ufldl.stanford.edu/tutorial/unsupervised/ExercisePCAWhitening/ (Links to an external site.)Links
