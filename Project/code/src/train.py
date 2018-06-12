@@ -193,6 +193,31 @@ def dropout(inputs,
 
 ############################################################################
 ###### Operator 
+def normConv(points_pl, knn_graph, k=20):
+    #get the edge feature
+    og_batch_size = points_pl.get_shape().as_list()[0]
+    points_pl = tf.squeeze(points_pl)
+    if og_batch_size == 1:
+        points_pl = tf.expand_dims(points_pl,0)
+
+    points_pl_central = points_pl 
+    points_pl_shape = points_pl.get_shape()
+    batch_size = points_pl_shape[0].value
+    num_points = points_pl_shape[1].value
+    num_dim = points_pl_shape[2].value
+
+    idx = tf.range(batch_size)*num_points
+    idx = tf.reshape(idx,[batch_size,1,1])
+
+    points_pl_flat = tf.reshape(points_pl,[-1,num_dim])
+    points_pl_neighbors = tf.gather(points_pl_flat, knn_graph+idx)
+    points_pl_central = tf.expand_dims(points_pl_central, axis=-2)
+
+    points_pl_central = tf.tile(points_pl_central,[1,1,k,1])
+
+    edge_conv = tf.concat([points_pl_central, points_pl_neighbors-points_pl_central],axis=-1)
+    return edge_conv
+
 def edgeConv(points_pl, knn_graph, k=20):
     #get the edge feature
     og_batch_size = points_pl.get_shape().as_list()[0]
@@ -241,13 +266,14 @@ def createModel_Dyn(points_pl,
     edgeFeatures20 = edgeConv(points_pl=points_pl, knn_graph=knn20_graph, k=20)
     edgeFeatures30 = edgeConv(points_pl=points_pl, knn_graph=knn30_graph, k=30)
     edgeFeatures40 = edgeConv(points_pl=points_pl, knn_graph=knn40_graph, k=40)
-    edgeFeatures50 = edgeConv(points_pl=points_pl, knn_graph=knn50_graph, k=50)
-    edgeFeatures60 = edgeConv(points_pl=points_pl, knn_graph=knn60_graph, k=60)
+    #edgeFeatures50 = edgeConv(points_pl=points_pl, knn_graph=knn50_graph, k=50)
+    #edgeFeatures60 = edgeConv(points_pl=points_pl, knn_graph=knn60_graph, k=60)
 
     
     #conv1 
     net = conv2d(inputs= edgeFeatures10,
-                 num_output_channels=64,
+                 #num_output_channels=64,
+                 num_output_channels=8,
                  kernel_size=[1,1],
                  scope='xyzcnn1',
                  padding='VALID',
@@ -261,7 +287,8 @@ def createModel_Dyn(points_pl,
 
     #conv2
     net = conv2d(inputs= edgeFeatures20,
-                 num_output_channels=64,
+                 #num_output_channels=64,
+                 num_output_channels=16,
                  kernel_size=[1,1],
                  scope='xyzcnn2',
                  padding='VALID',
@@ -275,7 +302,8 @@ def createModel_Dyn(points_pl,
 
     #conv3
     net = conv2d(inputs= edgeFeatures30,
-                 num_output_channels=64,
+                 #num_output_channels=64,
+                 num_output_channels=32,
                  kernel_size=[1,1],
                  scope='xyzcnn3',
                  padding='VALID',
@@ -288,7 +316,8 @@ def createModel_Dyn(points_pl,
     #print(net3)
     #conv4
     net = conv2d(inputs= edgeFeatures40,
-                 num_output_channels=128,
+                 #num_output_channels=128,
+                 num_output_channels=64,
                  kernel_size=[1,1],
                  scope='xyzcnn4',
                  padding='VALID',
@@ -304,7 +333,8 @@ def createModel_Dyn(points_pl,
 
     #agg
     net = conv2d(inputs= tf.concat([net1, net2, net3, net4], axis=-1),
-                 num_output_channels=1024,
+                 #num_output_channels=1024,
+                 num_output_channels=512,
                  kernel_size=[1,1],
                  scope='agg',
                  padding='VALID',
@@ -323,7 +353,8 @@ def createModel_Dyn(points_pl,
 
     #FC1    
     net = fully_connected(inputs = net,
-                          num_outputs= 512,
+                          #num_outputs= 512,
+                          num_outputs= 256,
                           scope = 'fc1',                          
                           bn=True,
                           decay= decay,
@@ -338,19 +369,19 @@ def createModel_Dyn(points_pl,
     #print(net)
 
     #FC2
-    net = fully_connected(inputs = net,
-                          num_outputs= 256,
-                          scope = 'fc2',                          
-                          bn=True,
-                          decay= decay,
-                          training = training)
+    #net = fully_connected(inputs = net,
+    #                      num_outputs= 256,
+    #                      scope = 'fc2',                          
+    #                      bn=True,
+    #                      decay= decay,
+    #                      training = training)
     #print(net)
 
     #dp2
-    net = dropout(inputs=net, 
-                  training=training,
-                  scope='dp2',
-                  keep_prod=0.5)
+    #net = dropout(inputs=net, 
+    #              training=training,
+    #              scope='dp2',
+    #              keep_prod=0.5)
     #print(net)
 
     #FC3
