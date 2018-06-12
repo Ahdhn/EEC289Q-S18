@@ -218,7 +218,7 @@ def normConv(points_pl, knn_graph, k=20):
     edge_conv = tf.concat([points_pl_central, points_pl_neighbors-points_pl_central],axis=-1)
     return edge_conv
 
-def edgeConv(points_pl, knn_graph, k=20):
+def edgeConv(points_pl, knn_graph, k=20, concat_points=True):
     #get the edge feature
     og_batch_size = points_pl.get_shape().as_list()[0]
     points_pl = tf.squeeze(points_pl)
@@ -240,7 +240,12 @@ def edgeConv(points_pl, knn_graph, k=20):
 
     points_pl_central = tf.tile(points_pl_central,[1,1,k,1])
 
-    edge_conv = tf.concat([points_pl_central, points_pl_neighbors-points_pl_central],axis=-1)
+    if concat_points:
+        edge_conv = tf.concat([points_pl_central, points_pl_neighbors-points_pl_central],axis=-1)
+    else:
+        edge_conv = tf.concat([points_pl_central, points_pl_neighbors-points_pl_central],axis=-1)
+    
+
     return edge_conv
 
 ############################################################################
@@ -262,10 +267,10 @@ def createModel_Dyn(points_pl,
 
     #get features 
     #edgeFeatures = edgeConv(points_pl=points_pl, knn_graph=knn_graph, k=k)
-    edgeFeatures10 = edgeConv(points_pl=points_pl, knn_graph=knn10_graph, k=10)
-    edgeFeatures20 = edgeConv(points_pl=points_pl, knn_graph=knn20_graph, k=20)
-    edgeFeatures30 = edgeConv(points_pl=points_pl, knn_graph=knn30_graph, k=30)
-    edgeFeatures40 = edgeConv(points_pl=points_pl, knn_graph=knn40_graph, k=40)
+    edgeFeatures10 = edgeConv(points_pl=points_pl, knn_graph=knn10_graph, k=10, concat_points = False)  
+    edgeFeatures20 = edgeConv(points_pl=points_pl, knn_graph=knn20_graph, k=20, concat_points = False)
+    edgeFeatures30 = edgeConv(points_pl=points_pl, knn_graph=knn30_graph, k=30, concat_points = False)
+    edgeFeatures40 = edgeConv(points_pl=points_pl, knn_graph=knn40_graph, k=40, concat_points = True)
     #edgeFeatures50 = edgeConv(points_pl=points_pl, knn_graph=knn50_graph, k=50)
     #edgeFeatures60 = edgeConv(points_pl=points_pl, knn_graph=knn60_graph, k=60)
 
@@ -660,7 +665,7 @@ def trainMain(XYZ_point_cloud, labels, XYZ_point_notmals=None):
     pos_dim = 3
     max_epoch = 2000
     learning_rate = 0.001
-    gpu = 3
+    gpu = 0
     momentum = 0.9
     optimizer = 'adam'
     decay_step = 200000
