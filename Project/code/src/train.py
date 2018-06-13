@@ -6,7 +6,9 @@ import os
 import sys
 import random
 from util import KNN
+from util import dotProduct
 from tqdm import tqdm
+
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'#filter out warning 
 LOG_DIR = 'log'
@@ -193,29 +195,32 @@ def dropout(inputs,
 
 ############################################################################
 ###### Operator 
-def normConv(points_pl, knn_graph, k=20):
+def normConv(points_normals_pl, knn_graph, k=20):
     #get the edge feature
-    og_batch_size = points_pl.get_shape().as_list()[0]
-    points_pl = tf.squeeze(points_pl)
+    og_batch_size = points_normals_pl.get_shape().as_list()[0]
+    points_normals_pl = tf.squeeze(points_normals_pl)
     if og_batch_size == 1:
-        points_pl = tf.expand_dims(points_pl,0)
+        points_normals_pl = tf.expand_dims(points_normals_pl,0)
 
-    points_pl_central = points_pl 
-    points_pl_shape = points_pl.get_shape()
-    batch_size = points_pl_shape[0].value
-    num_points = points_pl_shape[1].value
-    num_dim = points_pl_shape[2].value
+    points_normals_pl_central = points_normals_pl 
+    points_normals_pl_shape = points_normals_pl.get_shape()
+    batch_size = points_normals_pl_shape[0].value
+    num_points = points_normals_pl_shape[1].value
+    num_dim = points_normals_pl_shape[2].value
 
     idx = tf.range(batch_size)*num_points
     idx = tf.reshape(idx,[batch_size,1,1])
 
-    points_pl_flat = tf.reshape(points_pl,[-1,num_dim])
-    points_pl_neighbors = tf.gather(points_pl_flat, knn_graph+idx)
-    points_pl_central = tf.expand_dims(points_pl_central, axis=-2)
+    points_normals_pl_flat = tf.reshape(points_normals_pl,[-1,num_dim])
+    points_normals_pl_neighbors = tf.gather(points_normals_pl_flat, knn_graph+idx)
+    points_normals_pl_central = tf.expand_dims(points_normals_pl_central, axis=-2)
 
-    points_pl_central = tf.tile(points_pl_central,[1,1,k,1])
+    points_normals_pl_central = tf.tile(points_normals_pl_central,[1,1,k,1])
 
-    edge_conv = tf.concat([points_pl_central, points_pl_neighbors-points_pl_central],axis=-1)
+    #tf.reduce_sum(tf.multiply(points_normals_pl_central,points_normals_pl_neighbors), 3,keep_dims=True)
+
+    norm_conv = tf.concat([points_normals_pl_central, points_normals_pl_neighbors-points_normals_pl_central],axis=-1)
+    
     return edge_conv
 
 def edgeConv(points_pl, knn_graph, k=20, concat_points=True):
@@ -234,17 +239,23 @@ def edgeConv(points_pl, knn_graph, k=20, concat_points=True):
     idx = tf.range(batch_size)*num_points
     idx = tf.reshape(idx,[batch_size,1,1])
 
-    points_pl_flat = tf.reshape(points_pl,[-1,num_dim])
-    points_pl_neighbors = tf.gather(points_pl_flat, knn_graph+idx)
-    points_pl_central = tf.expand_dims(points_pl_central, axis=-2)
+    
+    points_pl_flat = tf.reshape(points_pl,[-1,num_dim])    
+    
 
-    points_pl_central = tf.tile(points_pl_central,[1,1,k,1])
+    points_pl_neighbors = tf.gather(points_pl_flat, knn_graph+idx)
+    
+
+    points_pl_central = tf.expand_dims(points_pl_central, axis=-2)
+    
+
+    points_pl_central = tf.tile(points_pl_central,[1,1,k,1])    
+    
 
     if concat_points:
         edge_conv = tf.concat([points_pl_central, points_pl_neighbors-points_pl_central],axis=-1)
     else:
-        edge_conv = tf.concat([points_pl_central, points_pl_neighbors-points_pl_central],axis=-1)
-    
+        edge_conv = tf.concat([points_pl_central, points_pl_neighbors-points_pl_central],axis=-1)        
 
     return edge_conv
 
@@ -256,8 +267,8 @@ def createModel_Dyn(points_pl,
 	                knn20_graph,
 	                knn30_graph,
 	                knn40_graph,
-	                knn50_graph,
-	                knn60_graph,
+	                knn50_graph=None,
+	                knn60_graph=None,
 	                decay=None):
 
     #input_points is a placeholder 
@@ -265,20 +276,18 @@ def createModel_Dyn(points_pl,
     num_pts = points_pl.get_shape()[1].value       
     
 
-    #get features 
-    #edgeFeatures = edgeConv(points_pl=points_pl, knn_graph=knn_graph, k=k)
+    #get features     
     edgeFeatures10 = edgeConv(points_pl=points_pl, knn_graph=knn10_graph, k=10, concat_points = False)  
     edgeFeatures20 = edgeConv(points_pl=points_pl, knn_graph=knn20_graph, k=20, concat_points = False)
     edgeFeatures30 = edgeConv(points_pl=points_pl, knn_graph=knn30_graph, k=30, concat_points = False)
     edgeFeatures40 = edgeConv(points_pl=points_pl, knn_graph=knn40_graph, k=40, concat_points = True)
-    #edgeFeatures50 = edgeConv(points_pl=points_pl, knn_graph=knn50_graph, k=50)
-    #edgeFeatures60 = edgeConv(points_pl=points_pl, knn_graph=knn60_graph, k=60)
+    
 
     
     #conv1 
     net = conv2d(inputs= edgeFeatures10,
                  #num_output_channels=64,
-                 num_output_channels=8,
+                 num_output_channels=16,
                  kernel_size=[1,1],
                  scope='xyzcnn1',
                  padding='VALID',
@@ -293,7 +302,7 @@ def createModel_Dyn(points_pl,
     #conv2
     net = conv2d(inputs= edgeFeatures20,
                  #num_output_channels=64,
-                 num_output_channels=16,
+                 num_output_channels=32,
                  kernel_size=[1,1],
                  scope='xyzcnn2',
                  padding='VALID',
@@ -308,7 +317,7 @@ def createModel_Dyn(points_pl,
     #conv3
     net = conv2d(inputs= edgeFeatures30,
                  #num_output_channels=64,
-                 num_output_channels=32,
+                 num_output_channels=64,
                  kernel_size=[1,1],
                  scope='xyzcnn3',
                  padding='VALID',
@@ -322,7 +331,7 @@ def createModel_Dyn(points_pl,
     #conv4
     net = conv2d(inputs= edgeFeatures40,
                  #num_output_channels=128,
-                 num_output_channels=64,
+                 num_output_channels=128,
                  kernel_size=[1,1],
                  scope='xyzcnn4',
                  padding='VALID',
@@ -370,7 +379,7 @@ def createModel_Dyn(points_pl,
     net = dropout(inputs=net, 
                   training=training,
                   scope='dp1',
-                  keep_prod=0.5)
+                  keep_prod=0.2)
     #print(net)
 
     #FC2
@@ -669,8 +678,7 @@ def trainMain(XYZ_point_cloud, labels, XYZ_point_notmals=None):
     momentum = 0.9
     optimizer = 'adam'
     decay_step = 200000
-    decay_rate = 0.7
-    max_num_point = 2048
+    decay_rate = 0.7    
     num_classes = 40
 
     Dyn = True
@@ -693,8 +701,8 @@ def trainMain(XYZ_point_cloud, labels, XYZ_point_notmals=None):
             	knn20_graph =  KNN(pointcloud_pl=points_pl, k=20)
             	knn30_graph =  KNN(pointcloud_pl=points_pl, k=30)
             	knn40_graph =  KNN(pointcloud_pl=points_pl, k=40)
-            	knn50_graph =  KNN(pointcloud_pl=points_pl, k=50)
-            	knn60_graph =  KNN(pointcloud_pl=points_pl, k=60)
+            	#knn50_graph =  KNN(pointcloud_pl=points_pl, k=50)
+            	#knn60_graph =  KNN(pointcloud_pl=points_pl, k=60)
             else:
             	knn_graph =  KNN(pointcloud_pl=points_pl, k=k)
             
@@ -718,8 +726,8 @@ def trainMain(XYZ_point_cloud, labels, XYZ_point_notmals=None):
                         	           knn20_graph=knn20_graph,
                         	           knn30_graph=knn30_graph,
                         	           knn40_graph=knn40_graph,
-                        	           knn50_graph=knn50_graph,
-                        	           knn60_graph=knn60_graph,                        	           
+                        	           #knn50_graph=knn50_graph,
+                        	           #knn60_graph=knn60_graph,                        	           
                             	       decay=bn_decay)
             else:
             	pred = createModel(points_pl=points_pl, 
@@ -728,6 +736,7 @@ def trainMain(XYZ_point_cloud, labels, XYZ_point_notmals=None):
                         	       k=k,
                             	   decay=bn_decay)
             loss = get_loss(pred=pred, label=labels_pl)
+
             tf.summary.scalar('loss',loss)
 
             correct = tf.equal(tf.argmax(pred,1), tf.to_int64(labels_pl))
