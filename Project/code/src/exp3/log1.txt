@@ -1,7 +1,9 @@
 hierarchical dynamic graph
 only using the edge conv (not normals)
 outputs: conv1_16, conv2_32, conv3_64, conv4_128, agg_512, FC_256, 40
+all feasture concatenate the original coordinates 
 dropout 0.2
+
 
 ***** EPOCH 000 *****
 100%|███████████████████████████████████████████████████████████████████| 307/307 [03:11<00:00,  1.59it/s]
