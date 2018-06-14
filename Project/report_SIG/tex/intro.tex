@@ -1,16 +1,15 @@
 \section{Introduction} 
 \subsection{Problem Statement:}
-%\vspace{-10mm}
-\begin{wrapfigure}[14]{r}{60mm}
-  \begin{center}
-    \includegraphics[width=0.3\textwidth]{fig/ex.JPG}
-  \end{center} 
-  \caption*{Example Models (color here are added for visualization only).}
-\end{wrapfigure}
 
 In this project we are trying to classify 3D point cloud. The data set is sets of \emph{models}. Each model is comprised of a set of $n$ data points. A data points is a tuple of 3D coordinates ($x,y,z$) of the point in the space. Figure on the left shows few examples of the data set we have. Each model is associated with a label (for training) shown under the model. 
 
+
 The data set consists (ModelNet40 \citep{wu20153d}) of 9840 models for training and 2468 models for testing. Our task is to create a CNN model that can train such data set and achieve good accuracy within the test models. 
+
+\begin{figure}[hbt]
+\includegraphics[height=2.5in, width=2.5in]{fig/ex.JPG}
+\caption{Example Models (color here are added for visualization only).}
+\end{figure}
 
 
 \subsection{Challenges:}
@@ -31,4 +30,4 @@ These methods represents a single model as a collection of 2D views to which sta
 \paragraph{Volumetric Methods:}
 Voxelization is another straightforward way to convert irregular data set to a regular 3D grid over which standard CNN can be applied~\citep{maturana2015voxnet}. Voxelization produces a sparsely-occupied grids and induce quantization artifacts. Cleverer space partition like $k$-d tree can be used to mitigate these problem~\citep{klokov2017escape}.
 \paragraph{Direction Methods:}
-These methods try to learn from the raw data points without voxelization or alternating the views. It should be expected that these methods to have greater accuracy since we do not manipulate the feature being learned. However, proper model design is challenging due to the challenges been mention earlier. The pioneer work on tackling point cloud learning from the raw data set is %PointNet~\ref{•}
+These methods try to learn from the raw data points without voxelization or alternating the views. It should be expected that these methods to have greater accuracy since we do not manipulate the feature being learned. However, proper model design is challenging due to the challenges been mention earlier. The pioneer work on tackling point cloud learning from the raw data set is PointNet~\citep{pointnet}. PointNet applies a symmetric function to the 3D coordinates in a manner invariant to permutation where every point is treated individually. However, PointNet employs a complex and computationally expensive spatial transformer network to learn the 3D alignment of the points. This is deu to the fact that the feature being learned are global features and no local features are utilized.  
