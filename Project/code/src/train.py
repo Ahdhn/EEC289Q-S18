@@ -281,23 +281,23 @@ def createModel_Dyn(points_pl,
 
     #get features     
     edgeFeatures10 = edgeConv(points_pl=points_pl, knn_graph=knn10_graph, k=10, concat_points = False)  
-    edgeFeatures20 = edgeConv(points_pl=points_pl, knn_graph=knn20_graph, k=20, concat_points = False)
+    edgeFeatures20 = edgeConv(points_pl=points_pl, knn_graph=knn20_graph, k=20, concat_points = True)
     edgeFeatures30 = edgeConv(points_pl=points_pl, knn_graph=knn30_graph, k=30, concat_points = False)
     edgeFeatures40 = edgeConv(points_pl=points_pl, knn_graph=knn40_graph, k=40, concat_points = True)
 
     #norm features 
     if points_normals_pl is not None:
         #normFeatures10 = normConv(points_normals_pl=points_normals_pl, knn_graph=knn10_graph, k=10, concat_points = False)  
-        normFeatures20 = normConv(points_normals_pl=points_normals_pl, knn_graph=knn20_graph, k=20, concat_points = False)
+        normFeatures20 = normConv(points_normals_pl=points_normals_pl, knn_graph=knn20_graph, k=20, concat_points = True)
         #normFeatures30 = normConv(points_normals_pl=points_normals_pl, knn_graph=knn30_graph, k=30, concat_points = False)
         normFeatures40 = normConv(points_normals_pl=points_normals_pl, knn_graph=knn40_graph, k=40, concat_points = True)
         #confusing code names but it is easy to write this way!!!
         edgeFeatures10 = normFeatures20
         edgeFeatures30 = normFeatures40
-        print("edgeFeatures10", edgeFeatures10)
-        print("edgeFeatures20", edgeFeatures20)
-        print("edgeFeatures30", edgeFeatures30)
-        print("edgeFeatures40", edgeFeatures40)
+        #print("edgeFeatures10", edgeFeatures10)
+        #print("edgeFeatures20", edgeFeatures20)
+        #print("edgeFeatures30", edgeFeatures30)
+        #print("edgeFeatures40", edgeFeatures40)
 
         
     #conv1 
@@ -389,23 +389,23 @@ def createModel_Dyn(points_pl,
     net = dropout(inputs=net, 
                   training=training,
                   scope='dp1',
-                  keep_prod=0.5)
+                  keep_prod=0.2)
     #print(net)
 
     #FC2
-    #net = fully_connected(inputs = net,
-    #                      num_outputs= 256,
-    #                      scope = 'fc2',                          
-    #                      bn=True,
-    #                      decay= decay,
-    #                      training = training)
+    net = fully_connected(inputs = net,
+                          num_outputs= 512,
+                          scope = 'fc2',                          
+                          bn=True,
+                          decay= decay,
+                          training = training)
     #print(net)
 
     #dp2
-    #net = dropout(inputs=net, 
-    #              training=training,
-    #              scope='dp2',
-    #              keep_prod=0.5)
+    net = dropout(inputs=net, 
+                  training=training,
+                  scope='dp2',
+                  keep_prod=0.2)
     #print(net)
 
     #FC3
