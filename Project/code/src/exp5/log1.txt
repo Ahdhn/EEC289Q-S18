@@ -1,0 +1,5 @@
+hierarchical dynamic graph
+using edge conv and norm conv (20edgeconv, 20normconv, 40edgecovn, 40normconv)
+no concat for 20edgeconv and 20normconv
+(conv1 16,conv2 32,conv3 64,conv4 128, agg 256, FC256, 40)
+dropout 0.5

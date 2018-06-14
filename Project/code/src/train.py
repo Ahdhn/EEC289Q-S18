@@ -11,7 +11,7 @@ from tqdm import tqdm
 
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'#filter out warning 
-LOG_DIR = 'log'
+LOG_DIR = 'log_test'
 if not os.path.exists(LOG_DIR): 
     os.mkdir(LOG_DIR)
 else:
@@ -195,7 +195,7 @@ def dropout(inputs,
 
 ############################################################################
 ###### Operator 
-def normConv(points_normals_pl, knn_graph, k=20):
+def normConv(points_normals_pl, knn_graph, k=20, concat_points = True):
     #get the edge feature
     og_batch_size = points_normals_pl.get_shape().as_list()[0]
     points_normals_pl = tf.squeeze(points_normals_pl)
@@ -217,11 +217,13 @@ def normConv(points_normals_pl, knn_graph, k=20):
 
     points_normals_pl_central = tf.tile(points_normals_pl_central,[1,1,k,1])
 
-    #tf.reduce_sum(tf.multiply(points_normals_pl_central,points_normals_pl_neighbors), 3,keep_dims=True)
-
-    norm_conv = tf.concat([points_normals_pl_central, points_normals_pl_neighbors-points_normals_pl_central],axis=-1)
+    norm_conv = tf.reduce_sum(tf.multiply(points_normals_pl_central,points_normals_pl_neighbors), 3,keep_dims=True)
     
-    return edge_conv
+    if concat_points:
+        norm_conv = tf.concat([points_normals_pl_central, norm_conv],axis=-1)
+    
+    return norm_conv
+
 
 def edgeConv(points_pl, knn_graph, k=20, concat_points=True):
     #get the edge feature
@@ -255,18 +257,19 @@ def edgeConv(points_pl, knn_graph, k=20, concat_points=True):
     if concat_points:
         edge_conv = tf.concat([points_pl_central, points_pl_neighbors-points_pl_central],axis=-1)
     else:
-        edge_conv = tf.concat([points_pl_central, points_pl_neighbors-points_pl_central],axis=-1)        
+        edge_conv = points_pl_neighbors-points_pl_central   
 
     return edge_conv
 
 ############################################################################
 ###### Model creation 
-def createModel_Dyn(points_pl, 
+def createModel_Dyn(points_pl,                    
 	                training,
 	                knn10_graph,
 	                knn20_graph,
 	                knn30_graph,
-	                knn40_graph,
+	                knn40_graph,                    
+                    points_normals_pl = None,
 	                knn50_graph=None,
 	                knn60_graph=None,
 	                decay=None):
@@ -281,13 +284,25 @@ def createModel_Dyn(points_pl,
     edgeFeatures20 = edgeConv(points_pl=points_pl, knn_graph=knn20_graph, k=20, concat_points = False)
     edgeFeatures30 = edgeConv(points_pl=points_pl, knn_graph=knn30_graph, k=30, concat_points = False)
     edgeFeatures40 = edgeConv(points_pl=points_pl, knn_graph=knn40_graph, k=40, concat_points = True)
-    
 
-    
+    #norm features 
+    if points_normals_pl is not None:
+        #normFeatures10 = normConv(points_normals_pl=points_normals_pl, knn_graph=knn10_graph, k=10, concat_points = False)  
+        normFeatures20 = normConv(points_normals_pl=points_normals_pl, knn_graph=knn20_graph, k=20, concat_points = False)
+        #normFeatures30 = normConv(points_normals_pl=points_normals_pl, knn_graph=knn30_graph, k=30, concat_points = False)
+        normFeatures40 = normConv(points_normals_pl=points_normals_pl, knn_graph=knn40_graph, k=40, concat_points = True)
+        #confusing code names but it is easy to write this way!!!
+        edgeFeatures10 = normFeatures20
+        edgeFeatures30 = normFeatures40
+        print("edgeFeatures10", edgeFeatures10)
+        print("edgeFeatures20", edgeFeatures20)
+        print("edgeFeatures30", edgeFeatures30)
+        print("edgeFeatures40", edgeFeatures40)
+
+        
     #conv1 
-    net = conv2d(inputs= edgeFeatures10,
-                 #num_output_channels=64,
-                 num_output_channels=16,
+    net = conv2d(inputs= edgeFeatures10,                 
+                 num_output_channels=64,
                  kernel_size=[1,1],
                  scope='xyzcnn1',
                  padding='VALID',
@@ -300,9 +315,8 @@ def createModel_Dyn(points_pl,
     #print(net1)
 
     #conv2
-    net = conv2d(inputs= edgeFeatures20,
-                 #num_output_channels=64,
-                 num_output_channels=32,
+    net = conv2d(inputs= edgeFeatures20,                 
+                 num_output_channels=64,
                  kernel_size=[1,1],
                  scope='xyzcnn2',
                  padding='VALID',
@@ -315,8 +329,7 @@ def createModel_Dyn(points_pl,
     #print(net2)
 
     #conv3
-    net = conv2d(inputs= edgeFeatures30,
-                 #num_output_channels=64,
+    net = conv2d(inputs= edgeFeatures30,                 
                  num_output_channels=64,
                  kernel_size=[1,1],
                  scope='xyzcnn3',
@@ -329,8 +342,7 @@ def createModel_Dyn(points_pl,
     net3 = net
     #print(net3)
     #conv4
-    net = conv2d(inputs= edgeFeatures40,
-                 #num_output_channels=128,
+    net = conv2d(inputs= edgeFeatures40,                 
                  num_output_channels=128,
                  kernel_size=[1,1],
                  scope='xyzcnn4',
@@ -346,8 +358,7 @@ def createModel_Dyn(points_pl,
 
 
     #agg
-    net = conv2d(inputs= tf.concat([net1, net2, net3, net4], axis=-1),
-                 #num_output_channels=1024,
+    net = conv2d(inputs= tf.concat([net1, net2, net3, net4], axis=-1),                 
                  num_output_channels=512,
                  kernel_size=[1,1],
                  scope='agg',
@@ -366,9 +377,8 @@ def createModel_Dyn(points_pl,
     #print(net)
 
     #FC1    
-    net = fully_connected(inputs = net,
-                          #num_outputs= 512,
-                          num_outputs= 256,
+    net = fully_connected(inputs = net,                          
+                          num_outputs= 512,
                           scope = 'fc1',                          
                           bn=True,
                           decay= decay,
@@ -379,7 +389,7 @@ def createModel_Dyn(points_pl,
     net = dropout(inputs=net, 
                   training=training,
                   scope='dp1',
-                  keep_prod=0.2)
+                  keep_prod=0.5)
     #print(net)
 
     #FC2
@@ -550,11 +560,12 @@ def get_loss(pred, label):
     classify_loss = tf.reduce_mean(loss)
     return classify_loss
 
-def train_one_epoch(XYZ_point_cloud, 
+def train_one_epoch(XYZ_point_cloud,                     
                     labels, 
                     sess, 
                     ops, 
                     train_writer,
+                    XYZ_point_normals = None,
                     batch_size=32,
                     num_points=1024,
                     XYZ_point_notmals=None):                    
@@ -585,10 +596,16 @@ def train_one_epoch(XYZ_point_cloud,
         current_label = np.squeeze(current_label)
         if XYZ_point_notmals is not None:
             current_normals = current_normals[:,rand_ids,:]
+            feed_dict = {ops['points_pl']:current_data,
+                         ops['normals_pl']:current_normals,
+                         ops['labels_pl']:current_label,
+                         ops['is_training_pl']:is_training,}
+        else:
+            feed_dict = {ops['points_pl']:current_data,                         
+                         ops['labels_pl']:current_label,
+                         ops['is_training_pl']:is_training,}
 
-        feed_dict = {ops['points_pl']:current_data,
-                     ops['labels_pl']:current_label,
-                     ops['is_training_pl']:is_training,}
+
         summary, step, _, loss_val, pred_val = sess.run([ops['merged'], 
                                                          ops['step'],
                                                          ops['train_op'], 
@@ -610,7 +627,8 @@ def eval_one_epoch(XYZ_point_cloud,
                    ops,                 
                    batch_size=32,
                    num_points=1024,
-                   num_classes=40):
+                   num_classes=40,
+                   XYZ_point_notmals=None):
     #ops is a dict mapping from string to ops
     is_training = False
     total_correct = 0
@@ -632,11 +650,19 @@ def eval_one_epoch(XYZ_point_cloud,
         
         rand_ids = random.sample(range(XYZ_point_cloud.shape[1]), num_points)
         current_data = current_data[:,rand_ids,:]
-        #current_label = np.squeeze(current_label)
+        if XYZ_point_notmals is not None:
+            current_normals = XYZ_point_notmals[start_idx:end_idx,:,:]
+            current_normals = current_normals[:,rand_ids,:]
 
-        feed_dict = {ops['points_pl']: current_data,
-                     ops['labels_pl']: current_label,
-                     ops['is_training_pl']: is_training}
+            feed_dict = {ops['points_pl']: current_data,
+                         ops['normals_pl']: current_normals,
+                         ops['labels_pl']: current_label,
+                         ops['is_training_pl']: is_training}
+        else:
+            feed_dict = {ops['points_pl']: current_data,                        
+                         ops['labels_pl']: current_label,
+                         ops['is_training_pl']: is_training}
+
         summary, step, loss_val, pred_val = sess.run([ops['merged'], 
                                                       ops['step'],
                                                       ops['loss'], 
@@ -694,6 +720,7 @@ def trainMain(XYZ_point_cloud, labels, XYZ_point_notmals=None):
     with tf.Graph().as_default():       
         with tf.device('/device:GPU:'+str(gpu)):
             points_pl = tf.placeholder(tf.float32, shape=(batch_size, num_points, pos_dim))
+            normals_pl = tf.placeholder(tf.float32, shape=(batch_size, num_points, pos_dim))
             labels_pl = tf.placeholder(tf.int32, shape=(batch_size))
             
             if(Dyn):
@@ -721,6 +748,7 @@ def trainMain(XYZ_point_cloud, labels, XYZ_point_notmals=None):
             #create model, get loss
             if Dyn:
             	pred = createModel_Dyn(points_pl=points_pl, 
+                                       points_normals_pl=normals_pl,
                 	               	   training=is_training_pl,                     	               
                         	           knn10_graph=knn10_graph,
                         	           knn20_graph=knn20_graph,
@@ -773,6 +801,7 @@ def trainMain(XYZ_point_cloud, labels, XYZ_point_notmals=None):
         sess.run(init,{is_training_pl:True})
 
         ops ={'points_pl':points_pl,
+              'normals_pl':normals_pl,
               'labels_pl':labels_pl,
               'is_training_pl': is_training_pl,
               'pred': pred,
@@ -799,7 +828,8 @@ def trainMain(XYZ_point_cloud, labels, XYZ_point_notmals=None):
                            ops = ops,                          
                            batch_size=batch_size,
                            num_points=num_points,
-                           num_classes=num_classes)
+                           num_classes=num_classes,
+                           XYZ_point_notmals = XYZ_point_notmals[test_ids,:,:])
 
             if epoch %50 == 0:
               save_path = saver.save(sess,LOG_DIR+ "model.ckpt"+str (epoch))

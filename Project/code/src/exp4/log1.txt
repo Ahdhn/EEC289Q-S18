@@ -1,0 +1,1049 @@
+hierarchical dynamic graph
+only using the edge conv (not normals)
+outputs: conv1_16, conv2_32, conv3_64, conv4_128, agg_256, FC_256, 40
+only KNN40 concatenates the original coordinates 
+dropout 0.5
+
+
+***** EPOCH 000 *****
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.78it/s]
+mean loss :2.710148
+accuracy: 0.476893
+eval mean loss: 2.260890
+eval accuracy: 0.657062
+eval avg class acc: 0.578036
+Model saved in file: log/model.ckpt0
+***** EPOCH 001 *****
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:51<00:00,  1.81it/s]
+mean loss :2.205108
+accuracy: 0.656454
+eval mean loss: 2.001875
+eval accuracy: 0.729708
+eval avg class acc: 0.634559
+***** EPOCH 002 *****
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:51<00:00,  1.78it/s]
+mean loss :2.058969
+accuracy: 0.690757
+eval mean loss: 1.839795
+eval accuracy: 0.764205
+eval avg class acc: 0.661897
+***** EPOCH 003 *****
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:51<00:00,  1.80it/s]
+mean loss :1.971467
+accuracy: 0.723331
+eval mean loss: 1.771857
+eval accuracy: 0.794237
+eval avg class acc: 0.694711
+***** EPOCH 004 *****
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:51<00:00,  1.82it/s]
+mean loss :1.917833
+accuracy: 0.738090
+eval mean loss: 1.834636
+eval accuracy: 0.770292
+eval avg class acc: 0.668970
+***** EPOCH 005 *****
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:51<00:00,  1.79it/s]
+mean loss :1.882279
+accuracy: 0.747557
+eval mean loss: 1.775973
+eval accuracy: 0.781656
+eval avg class acc: 0.688413
+***** EPOCH 006 *****
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.78it/s]
+mean loss :1.849560
+accuracy: 0.762011
+eval mean loss: 1.731182
+eval accuracy: 0.816558
+eval avg class acc: 0.719534
+***** EPOCH 007 *****
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:51<00:00,  1.80it/s]
+mean loss :1.826431
+accuracy: 0.772598
+eval mean loss: 1.735234
+eval accuracy: 0.814529
+eval avg class acc: 0.739640
+***** EPOCH 008 *****
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:51<00:00,  1.79it/s]
+mean loss :1.799954
+accuracy: 0.780843
+eval mean loss: 1.700275
+eval accuracy: 0.828734
+eval avg class acc: 0.757631
+***** EPOCH 009 *****
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:51<00:00,  1.78it/s]
+mean loss :1.786923
+accuracy: 0.787459
+eval mean loss: 1.713315
+eval accuracy: 0.822240
+eval avg class acc: 0.743016
+***** EPOCH 010 *****
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:51<00:00,  1.80it/s]
+mean loss :1.770640
+accuracy: 0.798555
+eval mean loss: 1.712951
+eval accuracy: 0.825893
+eval avg class acc: 0.751608
+***** EPOCH 011 *****
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:51<00:00,  1.78it/s]
+mean loss :1.757338
+accuracy: 0.800692
+eval mean loss: 1.721681
+eval accuracy: 0.823458
+eval avg class acc: 0.760740
+***** EPOCH 012 *****
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:51<00:00,  1.80it/s]
+mean loss :1.744577
+accuracy: 0.809243
+eval mean loss: 1.700883
+eval accuracy: 0.839692
+eval avg class acc: 0.776575
+***** EPOCH 013 *****
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:51<00:00,  1.77it/s]
+mean loss :1.738911
+accuracy: 0.809446
+eval mean loss: 1.657435
+eval accuracy: 0.839286
+eval avg class acc: 0.762671
+***** EPOCH 014 *****
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:51<00:00,  1.79it/s]
+mean loss :1.721926
+accuracy: 0.819422
+eval mean loss: 1.678629
+eval accuracy: 0.834010
+eval avg class acc: 0.778178
+***** EPOCH 015 *****
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:51<00:00,  1.79it/s]
+mean loss :1.712079
+accuracy: 0.825936
+eval mean loss: 1.644878
+eval accuracy: 0.862419
+eval avg class acc: 0.796561
+***** EPOCH 016 *****
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:51<00:00,  1.78it/s]
+mean loss :1.702435
+accuracy: 0.830212
+eval mean loss: 1.676938
+eval accuracy: 0.844562
+eval avg class acc: 0.786578
+***** EPOCH 017 *****
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:51<00:00,  1.76it/s]
+mean loss :1.695865
+accuracy: 0.830822
+eval mean loss: 1.730013
+eval accuracy: 0.836851
+eval avg class acc: 0.781933
+***** EPOCH 018 *****
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:51<00:00,  1.77it/s]
+mean loss :1.686886
+accuracy: 0.841103
+eval mean loss: 1.668567
+eval accuracy: 0.857549
+eval avg class acc: 0.804747
+***** EPOCH 019 *****
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:51<00:00,  1.80it/s]
+mean loss :1.673227
+accuracy: 0.843445
+eval mean loss: 1.688504
+eval accuracy: 0.844968
+eval avg class acc: 0.786455
+***** EPOCH 020 *****
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:51<00:00,  1.78it/s]
+mean loss :1.667448
+accuracy: 0.846498
+eval mean loss: 1.629400
+eval accuracy: 0.859578
+eval avg class acc: 0.804428
+***** EPOCH 021 *****
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:51<00:00,  1.78it/s]
+mean loss :1.646053
+accuracy: 0.853929
+eval mean loss: 1.613346
+eval accuracy: 0.869318
+eval avg class acc: 0.815596
+***** EPOCH 022 *****
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:50<00:00,  1.80it/s]
+mean loss :1.638375
+accuracy: 0.863396
+eval mean loss: 1.621689
+eval accuracy: 0.862825
+eval avg class acc: 0.805103
+***** EPOCH 023 *****
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:51<00:00,  1.78it/s]
+mean loss :1.633491
+accuracy: 0.860546
+eval mean loss: 1.604036
+eval accuracy: 0.870130
+eval avg class acc: 0.825082
+***** EPOCH 024 *****
+  0%|                                                                                                                               | 0/307 [00:00<?, ?it/s]          2018-06-13 12:55:31.368984: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 12:55:31.369047: E tensorflow/core/util/events_writer.cc:131] Failed to flush 198 events to log/events.out.tfevents.1528915393.mario
+ 70%|██████████████████████████████████████████████████████████████████████████████████▎                                  | 216/307 [02:00<00:51,  1.77it/s]          2018-06-13 12:57:31.486449: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 12:57:31.486487: E tensorflow/core/util/events_writer.cc:131] Failed to flush 414 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:50<00:00,  1.78it/s]
+mean loss :1.632156
+accuracy: 0.866857
+eval mean loss: 1.613648
+eval accuracy: 0.868101
+eval avg class acc: 0.814976
+***** EPOCH 025 *****
+ 35%|█████████████████████████████████████████▏                                                                           | 108/307 [01:00<01:50,  1.80it/s]          2018-06-13 12:59:31.956874: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 12:59:31.956924: E tensorflow/core/util/events_writer.cc:131] Failed to flush 613 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:51<00:00,  1.81it/s]
+mean loss :1.623056
+accuracy: 0.866958
+eval mean loss: 1.583268
+eval accuracy: 0.869724
+eval avg class acc: 0.818580
+***** EPOCH 026 *****
+  0%|▍                                                                                                                      | 1/307 [00:00<02:45,  1.85it/s]          2018-06-13 13:01:32.390398: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 13:01:32.390489: E tensorflow/core/util/events_writer.cc:131] Failed to flush 813 events to log/events.out.tfevents.1528915393.mario
+ 71%|██████████████████████████████████████████████████████████████████████████████████▋                                  | 217/307 [02:00<00:50,  1.79it/s]2018-06-13util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 13:03:32.643946: E tensorflow/core/util/events_writer.cc:131] Failed to flush 1029 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:50<00:00,  1.82it/s]
+mean loss :1.622355
+accuracy: 0.868689
+eval mean loss: 1.584996
+eval accuracy: 0.882305
+eval avg class acc: 0.836363
+***** EPOCH 027 *****
+ 36%|██████████████████████████████████████████████████████████▍                                                                                                      2018-06-13 13:05:33.038862: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 13:05:33.038913: E tensorflow/core/util/events_writer.cc:131] Failed to flush 1229 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████
+mean loss :1.614524
+accuracy: 0.867264
+eval mean loss: 1.604206
+eval accuracy: 0.864854
+eval avg class acc: 0.812165
+***** EPOCH 028 *****
+  1%|█▌                                                                                                                                                               2018-06-13 13:07:33.291841: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 13:07:33.291886: E tensorflow/core/util/events_writer.cc:131] Failed to flush 1429 events to log/events.out.tfevents.1528915393.mario
+ 71%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▎                                            2018-06-13 13:09:33.437447: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 13:09:33.437496: E tensorflow/core/util/events_writer.cc:131] Failed to flush 1645 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████
+mean loss :1.606432
+accuracy: 0.876730
+eval mean loss: 1.601323
+eval accuracy: 0.872159
+eval avg class acc: 0.821458
+***** EPOCH 029 *****
+ 37%|███████████████████████████████████████████████████████████▉                                                                                                     2018-06-13 13:11:33.851805: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 13:11:33.851855: E tensorflow/core/util/events_writer.cc:131] Failed to flush 1846 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████
+mean loss :1.607904
+accuracy: 0.876832
+eval mean loss: 1.601139
+eval accuracy: 0.874594
+eval avg class acc: 0.837636
+***** EPOCH 030 *****
+  2%|███▏                                                                                                                                                             2018-06-13 13:13:33.976426: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 13:13:33.976478: E tensorflow/core/util/events_writer.cc:131] Failed to flush 2046 events to log/events.out.tfevents.1528915393.mario
+ 72%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▊                                           2018-06-13 13:15:34.106312: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 13:15:34.106364: E tensorflow/core/util/events_writer.cc:131] Failed to flush 2262 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████
+mean loss :1.600795
+accuracy: 0.877036
+eval mean loss: 1.610139
+eval accuracy: 0.863231
+eval avg class acc: 0.816673
+***** EPOCH 031 *****
+ 37%|█████████████████████████████████████████████████████████████                                                                                                    2018-06-13 13:17:34.461971: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 13:17:34.462006: E tensorflow/core/util/events_writer.cc:131] Failed to flush 2462 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████
+mean loss :1.598261
+accuracy: 0.877952
+eval mean loss: 1.599294
+eval accuracy: 0.866883
+eval avg class acc: 0.809932
+***** EPOCH 032 *****
+  3%|████▊                                                                                                                                                            2018-06-13 13:19:34.944395: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 13:19:34.944456: E tensorflow/core/util/events_writer.cc:131] Failed to flush 2663 events to log/events.out.tfevents.1528915393.mario
+ 74%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▉                                         2018-06-13 13:21:35.059758: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 13:21:35.059797: E tensorflow/core/util/events_writer.cc:131] Failed to flush 2879 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████
+mean loss :1.594918
+accuracy: 0.879479
+eval mean loss: 1.602846
+eval accuracy: 0.877029
+eval avg class acc: 0.826343
+***** EPOCH 033 *****
+ 38%|██████████████████████████████████████████████████████████████▋                                                                                                  2018-06-13 13:23:35.170557: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 13:23:35.170611: E tensorflow/core/util/events_writer.cc:131] Failed to flush 3079 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████
+mean loss :1.591762
+accuracy: 0.881209
+eval mean loss: 1.553675
+eval accuracy: 0.885146
+eval avg class acc: 0.831590
+***** EPOCH 034 *****
+  4%|██████▍                                                                                                                                                          2018-06-13 13:25:35.663258: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 13:25:35.663301: E tensorflow/core/util/events_writer.cc:131] Failed to flush 3280 events to log/events.out.tfevents.1528915393.mario
+ 74%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████                                        2018-06-13 13:27:35.694682: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 13:27:35.694732: E tensorflow/core/util/events_writer.cc:131] Failed to flush 3496 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████
+mean loss :1.587541
+accuracy: 0.880700
+eval mean loss: 1.602445
+eval accuracy: 0.868101
+eval avg class acc: 0.820732
+***** EPOCH 035 *****
+ 40%|████████████████████████████████████████████████████████████████▊                                                                                                2018-06-13 13:29:36.088786: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 13:29:36.088834: E tensorflow/core/util/events_writer.cc:131] Failed to flush 3697 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████
+mean loss :1.580086
+accuracy: 0.885485
+eval mean loss: 1.581753
+eval accuracy: 0.885552
+eval avg class acc: 0.830741
+***** EPOCH 036 *****
+  5%|████████                                                                                                                                                         2018-06-13 13:31:36.214933: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 13:31:36.214973: E tensorflow/core/util/events_writer.cc:131] Failed to flush 3897 events to log/events.out.tfevents.1528915393.mario
+ 75%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▋                                      2018-06-13 13:33:36.251305: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 13:33:36.251354: E tensorflow/core/util/events_writer.cc:131] Failed to flush 4113 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████
+mean loss :1.573221
+accuracy: 0.890879
+eval mean loss: 1.586330
+eval accuracy: 0.868912
+eval avg class acc: 0.826827
+***** EPOCH 037 *****
+ 40%|█████████████████████████████████████████████████████████████████▊                                                                                               2018-06-13 13:35:36.503325: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 13:35:36.503417: E tensorflow/core/util/events_writer.cc:131] Failed to flush 4313 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████
+mean loss :1.576624
+accuracy: 0.887724
+eval mean loss: 1.588744
+eval accuracy: 0.873782
+eval avg class acc: 0.828030
+***** EPOCH 038 *****
+  6%|█████████                                                                                                                                                        2018-06-13 13:37:36.786164: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 13:37:36.786213: E tensorflow/core/util/events_writer.cc:131] Failed to flush 4513 events to log/events.out.tfevents.1528915393.mario
+ 76%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▋                                     2018-06-13 13:39:37.038935: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 13:39:37.038971: E tensorflow/core/util/events_writer.cc:131] Failed to flush 4729 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████
+mean loss :1.569535
+accuracy: 0.889353
+eval mean loss: 1.579829
+eval accuracy: 0.883117
+eval avg class acc: 0.835955
+***** EPOCH 039 *****
+ 41%|███████████████████████████████████████████████████████████████████▍                                                                                             2018-06-13 13:41:37.355354: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 13:41:37.355405: E tensorflow/core/util/events_writer.cc:131] Failed to flush 4930 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████
+mean loss :1.568253
+accuracy: 0.891388
+eval mean loss: 1.567790
+eval accuracy: 0.875000
+eval avg class acc: 0.841947
+***** EPOCH 040 *****
+  7%|███████████▏                                                                                                                                                     2018-06-13 13:43:37.794189: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 13:43:37.794318: E tensorflow/core/util/events_writer.cc:131] Failed to flush 5130 events to log/events.out.tfevents.1528915393.mario
+ 77%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▎                                   2018-06-13 13:45:38.194357: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 13:45:38.194398: E tensorflow/core/util/events_writer.cc:131] Failed to flush 5346 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████
+mean loss :1.566208
+accuracy: 0.888945
+eval mean loss: 1.556337
+eval accuracy: 0.881494
+eval avg class acc: 0.841462
+***** EPOCH 041 *****
+ 42%|███████████████████████████████████████████████████████████████████▉                                                                                             2018-06-13 13:47:38.630114: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 13:47:38.630164: E tensorflow/core/util/events_writer.cc:131] Failed to flush 5545 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████
+mean loss :1.551941
+accuracy: 0.901873
+eval mean loss: 1.541879
+eval accuracy: 0.881088
+eval avg class acc: 0.850833
+***** EPOCH 042 *****
+  7%|██████████▋                                                                                                                                                      2018-06-13 13:49:38.744942: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 13:49:38.744981: E tensorflow/core/util/events_writer.cc:131] Failed to flush 5744 events to log/events.out.tfevents.1528915393.mario
+ 77%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▊                                    2018-06-13 13:51:39.257565: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 13:51:39.257625: E tensorflow/core/util/events_writer.cc:131] Failed to flush 5959 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████
+mean loss :1.549431
+accuracy: 0.895562
+eval mean loss: 1.568364
+eval accuracy: 0.881899
+eval avg class acc: 0.854803
+***** EPOCH 043 *****
+ 41%|████████████████████████▍                                  | 127/307 [01:11<01:39,  1.81it/s]                                                                    2018-06-13 13:53:39.737046: E tensorflow/core/util/events_writer.cc:162] The events file log/event                                                                    s.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 13:53:39.737136: E tensorflow/core/util/events_writer.cc:131] Failed to flush 6158 even                                                                    ts to log/events.out.tfevents.1528915393.mario
+100%|███████████████████████████████████████████████████████████| 307/307 [02:51<00:00,  1.78it/s]
+mean loss :1.541585
+accuracy: 0.902891
+eval mean loss: 1.557456
+eval accuracy: 0.879870
+eval avg class acc: 0.849635
+***** EPOCH 044 *****
+  6%|███▋                                                        | 19/307 [00:10<02:40,  1.80it/s]                                                                    2018-06-13 13:55:40.301314: E tensorflow/core/util/events_writer.cc:162] The events file log/event                                                                    s.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 13:55:40.301368: E tensorflow/core/util/events_writer.cc:131] Failed to flush 6357 even                                                                    ts to log/events.out.tfevents.1528915393.mario
+ 76%|████████████████████████████████████████████▉              | 234/307 [02:10<00:40,  1.79it/s]                                                                    2018-06-13 13:57:40.471783: E tensorflow/core/util/events_writer.cc:162] The events file log/event                                                                    s.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 13:57:40.471827: E tensorflow/core/util/events_writer.cc:131] Failed to flush 6572 even                                                                    ts to log/events.out.tfevents.1528915393.mario
+100%|███████████████████████████████████████████████████████████| 307/307 [02:51<00:00,  1.78it/s]
+mean loss :1.538429
+accuracy: 0.903705
+eval mean loss: 1.562194
+eval accuracy: 0.882305
+eval avg class acc: 0.839549
+***** EPOCH 045 *****
+ 41%|████████████████████████▏                                  | 126/307 [01:10<01:42,  1.77it/s]                                                                    2018-06-13 13:59:40.756256: E tensorflow/core/util/events_writer.cc:162] The events file log/event                                                                    s.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 13:59:40.756337: E tensorflow/core/util/events_writer.cc:131] Failed to flush 6771 even                                                                    ts to log/events.out.tfevents.1528915393.mario
+100%|███████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.78it/s]
+mean loss :1.540051
+accuracy: 0.902280
+eval mean loss: 1.567978
+eval accuracy: 0.875000
+eval avg class acc: 0.833726
+***** EPOCH 046 *****
+  6%|███▌                                                        | 18/307 [00:10<02:42,  1.78it/s]                                                                    2018-06-13 14:01:41.243863: E tensorflow/core/util/events_writer.cc:162] The events file log/event                                                                    s.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 14:01:41.243975: E tensorflow/core/util/events_writer.cc:131] Failed to flush 6970 even                                                                    ts to log/events.out.tfevents.1528915393.mario
+ 76%|████████████████████████████████████████████▉              | 234/307 [02:11<00:40,  1.78it/s]                                                                    2018-06-13 14:03:41.796442: E tensorflow/core/util/events_writer.cc:162] The events file log/event                                                                    s.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 14:03:41.796487: E tensorflow/core/util/events_writer.cc:131] Failed to flush 7185 even                                                                    ts to log/events.out.tfevents.1528915393.mario
+100%|███████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.75it/s]
+mean loss :1.533137
+accuracy: 0.909711
+eval mean loss: 1.575358
+eval accuracy: 0.872159
+eval avg class acc: 0.844048
+***** EPOCH 047 *****
+ 40%|███████████████████████▋                                   | 123/307 [01:08<01:42,  1.79it/s]                                                                    2018-06-13 14:05:42.096939: E tensorflow/core/util/events_writer.cc:162] The events file log/event                                                                    s.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 14:05:42.096984: E tensorflow/core/util/events_writer.cc:131] Failed to flush 7382 even                                                                    ts to log/events.out.tfevents.1528915393.mario
+100%|███████████████████████████████████████████████████████████| 307/307 [02:51<00:00,  1.79it/s]
+mean loss :1.539524
+accuracy: 0.904011
+eval mean loss: 1.546271
+eval accuracy: 0.885146
+eval avg class acc: 0.845840
+***** EPOCH 048 *****
+  5%|██▋                                                         | 14/307 [00:07<02:43,  1.79it/s]                                                                    2018-06-13 14:07:42.472931: E tensorflow/core/util/events_writer.cc:162] The events file log/event                                                                    s.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 14:07:42.472970: E tensorflow/core/util/events_writer.cc:131] Failed to flush 7580 even                                                                    ts to log/events.out.tfevents.1528915393.mario
+ 74%|███████████████████████████████████████████▊               | 228/307 [02:08<00:44,  1.76it/s]                                                                    2018-06-13 14:09:42.899933: E tensorflow/core/util/events_writer.cc:162] The events file log/event                                                                    s.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 14:09:42.900034: E tensorflow/core/util/events_writer.cc:131] Failed to flush 7794 even                                                                    ts to log/events.out.tfevents.1528915393.mario
+100%|███████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.81it/s]
+mean loss :1.529153
+accuracy: 0.905537
+eval mean loss: 1.564109
+eval accuracy: 0.880682
+eval avg class acc: 0.840204
+***** EPOCH 049 *****
+ 39%|███████████████████████                                    | 120/307 [01:06<01:43,  1.80it/s]                                                                    2018-06-13 14:11:43.013326: E tensorflow/core/util/events_writer.cc:162] The events file log/event                                                                    s.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 14:11:43.013381: E tensorflow/core/util/events_writer.cc:131] Failed to flush 7993 even                                                                    ts to log/events.out.tfevents.1528915393.mario
+100%|███████████████████████████████████████████████████████████| 307/307 [02:51<00:00,  1.77it/s]
+mean loss :1.528208
+accuracy: 0.908082
+eval mean loss: 1.567549
+eval accuracy: 0.874188
+eval avg class acc: 0.838214
+***** EPOCH 050 *****
+  4%|██▎                                                         | 12/307 [00:06<02:40,  1.84it/s]                                                                    2018-06-13 14:13:43.349229: E tensorflow/core/util/events_writer.cc:162] The events file log/event                                                                    s.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 14:13:43.349305: E tensorflow/core/util/events_writer.cc:131] Failed to flush 8192 even                                                                    ts to log/events.out.tfevents.1528915393.mario
+ 74%|███████████████████████████████████████████▋               | 227/307 [02:07<00:45,  1.78it/s]                                                                    2018-06-13 14:15:43.587973: E tensorflow/core/util/events_writer.cc:162] The events file log/event                                                                    s.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 14:15:43.588084: E tensorflow/core/util/events_writer.cc:131] Failed to flush 8406 even                                                                    ts to log/events.out.tfevents.1528915393.mario
+100%|███████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.80it/s]
+mean loss :1.529527
+accuracy: 0.910525
+eval mean loss: 1.549851
+eval accuracy: 0.887175
+eval avg class acc: 0.858759
+Model saved in file: log/model.ckpt50
+***** EPOCH 051 *****
+ 38%|██████████████████████▎                                    | 116/307 [01:04<01:46,  1.80it/s]                                                                    2018-06-13 14:17:43.867396: E tensorflow/core/util/events_writer.cc:162] The events file log/event                                                                    s.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 14:17:43.867449: E tensorflow/core/util/events_writer.cc:131] Failed to flush 8603 even                                                                    ts to log/events.out.tfevents.1528915393.mario
+100%|███████████████████████████████████████████████████████████| 307/307 [02:51<00:00,  1.79it/s]
+mean loss :1.529346
+accuracy: 0.908489
+eval mean loss: 1.562321
+eval accuracy: 0.881494
+eval avg class acc: 0.834008
+***** EPOCH 052 *****
+  3%|█▌                                                           | 8/307 [00:04<02:46,  1.80it/s]                                                                    2018-06-13 14:19:44.073195: E tensorflow/core/util/events_writer.cc:162] The events file log/event                                                                    s.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 14:19:44.073252: E tensorflow/core/util/events_writer.cc:131] Failed to flush 8802 even                                                                    ts to log/events.out.tfevents.1528915393.mario
+ 73%|██████████████████████████████████████████▊                | 223/307 [02:04<00:47,  1.78it/s]                                                                    2018-06-13 14:21:44.482478: E tensorflow/core/util/events_writer.cc:162] The events file log/event                                                                    s.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 14:21:44.482533: E tensorflow/core/util/events_writer.cc:131] Failed to flush 9017 even                                                                    ts to log/events.out.tfevents.1528915393.mario
+100%|███████████████████████████████████████████████████████████| 307/307 [02:51<00:00,  1.79it/s]
+mean loss :1.527499
+accuracy: 0.907675
+eval mean loss: 1.541567
+eval accuracy: 0.886364
+eval avg class acc: 0.856694
+***** EPOCH 053 *****
+ 37%|██████████████████████                                     | 115/307 [01:04<01:46,  1.80it/s]                                                                    2018-06-13 14:23:44.586183: E tensorflow/core/util/events_writer.cc:162] The events file log/event                                                                    s.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 14:23:44.586237: E tensorflow/core/util/events_writer.cc:131] Failed to flush 9215 even                                                                    ts to log/events.out.tfevents.1528915393.mario
+100%|███████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.80it/s]
+mean loss :1.524935
+accuracy: 0.907166
+eval mean loss: 1.545305
+eval accuracy: 0.886364
+eval avg class acc: 0.857158
+***** EPOCH 054 *****
+  1%|▊                                                            | 4/307 [00:02<02:49,  1.78it/s]                                                                    2018-06-13 14:25:44.747447: E tensorflow/core/util/events_writer.cc:162] The events file log/event                                                                    s.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 14:25:44.747512: E tensorflow/core/util/events_writer.cc:131] Failed to flush 9412 even                                                                    ts to log/events.out.tfevents.1528915393.mario
+ 72%|██████████████████████████████████████████▎                | 220/307 [02:03<00:49,  1.77it/s]                                                                    2018-06-13 14:27:45.161630: E tensorflow/core/util/events_writer.cc:162] The events file log/event                                                                    s.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 14:27:45.161843: E tensorflow/core/util/events_writer.cc:131] Failed to flush 9627 even                                                                    ts to log/events.out.tfevents.1528915393.mario
+100%|███████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.77it/s]
+mean loss :1.520910
+accuracy: 0.910322
+eval mean loss: 1.536313
+eval accuracy: 0.889205
+eval avg class acc: 0.847094
+***** EPOCH 055 *****
+ 36%|█████████████████████▏                                     | 110/307 [01:01<01:51,  1.76it/s]                                                                    2018-06-13 14:29:45.464434: E tensorflow/core/util/events_writer.cc:162] The events file log/event                                                                    s.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 14:29:45.464590: E tensorflow/core/util/events_writer.cc:131] Failed to flush 9825 even                                                                    ts to log/events.out.tfevents.1528915393.mario
+100%|███████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.80it/s]
+mean loss :1.519674
+accuracy: 0.912052
+eval mean loss: 1.533818
+eval accuracy: 0.889610
+eval avg class acc: 0.847203
+***** EPOCH 056 *****
+  0%|▏                                                            | 1/307 [00:00<02:54,  1.76it/s]                                                                    2018-06-13 14:31:45.848159: E tensorflow/core/util/events_writer.cc:162] The events file log/event                                                                    s.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 14:31:45.848211: E tensorflow/core/util/events_writer.cc:131] Failed to flush 10023 eve                                                                    nts to log/events.out.tfevents.1528915393.mario
+ 70%|█████████████████████████████████████████▏                 | 214/307 [02:00<00:52,  1.77it/s]                                                                    2018-06-13 14:33:45.900053: E tensorflow/core/util/events_writer.cc:162] The events file log/event                                                                    s.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 14:33:45.900127: E tensorflow/core/util/events_writer.cc:131] Failed to flush 10236 eve                                                                    nts to log/events.out.tfevents.1528915393.mario
+100%|███████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.78it/s]
+mean loss :1.514734
+accuracy: 0.913477
+eval mean loss: 1.545997
+eval accuracy: 0.887175
+eval avg class acc: 0.861632
+***** EPOCH 057 *****
+ 34%|████████████████████▏                                      | 105/307 [00:58<01:53,  1.78it/s]                                                                    2018-06-13 14:35:45.965674: E tensorflow/core/util/events_writer.cc:162] The events file log/event                                                                    s.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 14:35:45.965857: E tensorflow/core/util/events_writer.cc:131] Failed to flush 10433 eve                                                                    nts to log/events.out.tfevents.1528915393.mario
+100%|███████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.78it/s]
+mean loss :1.515260
+accuracy: 0.914393
+eval mean loss: 1.529571
+eval accuracy: 0.889610
+eval avg class acc: 0.857940
+***** EPOCH 058 *****
+  0%|                                                                                                                       | 0/307 [00:00<?, ?it/s]                  2018-06-13 14:37:49.531133: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 14:37:49.531197: E tensorflow/core/util/events_writer.cc:131] Failed to flush 10636 events to log/events.out.tfevents.1528915393.mario
+ 70%|███████████████████████████████████████████████████████████████████████████▉                                 | 214/307 [02:00<00:52,  1.76it/s]                  2018-06-13 14:39:49.884749: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 14:39:49.884807: E tensorflow/core/util/events_writer.cc:131] Failed to flush 10850 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.78it/s]
+mean loss :1.510103
+accuracy: 0.915208
+eval mean loss: 1.533068
+eval accuracy: 0.892451
+eval avg class acc: 0.852992
+***** EPOCH 059 *****
+ 35%|█████████████████████████████████████▋                                                                       | 106/307 [00:59<01:52,  1.79it/s]                  2018-06-13 14:41:50.422028: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 14:41:50.422709: E tensorflow/core/util/events_writer.cc:131] Failed to flush 11048 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.80it/s]
+mean loss :1.510920
+accuracy: 0.915106
+eval mean loss: 1.545745
+eval accuracy: 0.883929
+eval avg class acc: 0.858655
+***** EPOCH 060 *****
+  0%|                                                                                                                       | 0/307 [00:00<?, ?it/s]                  2018-06-13 14:43:53.332227: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 14:43:53.332327: E tensorflow/core/util/events_writer.cc:131] Failed to flush 11250 events to log/events.out.tfevents.1528915393.mario
+ 70%|████████████████████████████████████████████████████████████████████████████▋                                | 216/307 [02:01<00:51,  1.78it/s]                  2018-06-13 14:45:53.875431: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 14:45:53.875492: E tensorflow/core/util/events_writer.cc:131] Failed to flush 11465 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.78it/s]
+mean loss :1.510534
+accuracy: 0.917040
+eval mean loss: 1.530789
+eval accuracy: 0.900974
+eval avg class acc: 0.869879
+***** EPOCH 061 *****
+ 35%|█████████████████████████████████████▋                                                                       | 106/307 [00:59<01:52,  1.78it/s]                  2018-06-13 14:47:54.421155: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 14:47:54.421216: E tensorflow/core/util/events_writer.cc:131] Failed to flush 11663 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.80it/s]
+mean loss :1.505347
+accuracy: 0.921112
+eval mean loss: 1.539865
+eval accuracy: 0.885552
+eval avg class acc: 0.850378
+***** EPOCH 062 *****
+  0%|▎                                                                                                              | 1/307 [00:00<02:47,  1.83it/s]                  2018-06-13 14:49:56.594026: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 14:49:56.594630: E tensorflow/core/util/events_writer.cc:131] Failed to flush 11864 events to log/events.out.tfevents.1528915393.mario
+ 70%|████████████████████████████████████████████████████████████████████████████▎                                | 215/307 [02:00<00:50,  1.80it/s]                  2018-06-13 14:51:56.945968: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 14:51:56.946198: E tensorflow/core/util/events_writer.cc:131] Failed to flush 12078 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.74it/s]
+mean loss :1.497796
+accuracy: 0.922333
+eval mean loss: 1.567472
+eval accuracy: 0.872565
+eval avg class acc: 0.836038
+***** EPOCH 063 *****
+ 35%|█████████████████████████████████████▋                                                                       | 106/307 [00:59<01:52,  1.79it/s]                  2018-06-13 14:53:57.182160: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 14:53:57.182412: E tensorflow/core/util/events_writer.cc:131] Failed to flush 12276 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.76it/s]
+mean loss :1.493815
+accuracy: 0.923046
+eval mean loss: 1.544979
+eval accuracy: 0.886769
+eval avg class acc: 0.859075
+***** EPOCH 064 *****
+  0%|                                                                                                                       | 0/307 [00:00<?, ?it/s]                  2018-06-13 14:56:00.210544: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 14:56:00.210600: E tensorflow/core/util/events_writer.cc:131] Failed to flush 12478 events to log/events.out.tfevents.1528915393.mario
+ 70%|████████████████████████████████████████████████████████████████████████████▎                                | 215/307 [02:00<00:52,  1.77it/s]                  2018-06-13 14:58:00.707821: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 14:58:00.707876: E tensorflow/core/util/events_writer.cc:131] Failed to flush 12693 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.78it/s]
+mean loss :1.489282
+accuracy: 0.924471
+eval mean loss: 1.537533
+eval accuracy: 0.890422
+eval avg class acc: 0.853845
+***** EPOCH 065 *****
+ 35%|█████████████████████████████████████▋                                                                       | 106/307 [00:59<01:53,  1.78it/s]                  2018-06-13 15:00:00.729354: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 15:00:00.729409: E tensorflow/core/util/events_writer.cc:131] Failed to flush 12890 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.78it/s]
+mean loss :1.495056
+accuracy: 0.924064
+eval mean loss: 1.556581
+eval accuracy: 0.873782
+eval avg class acc: 0.834696
+***** EPOCH 066 *****
+  0%|                                                                                                                       | 0/307 [00:00<?, ?it/s]                  2018-06-13 15:02:03.654292: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 15:02:03.654338: E tensorflow/core/util/events_writer.cc:131] Failed to flush 13092 events to log/events.out.tfevents.1528915393.mario
+ 70%|███████████████████████████████████████████████████████████████████████████▉                                 | 214/307 [02:00<00:52,  1.79it/s]                  2018-06-13 15:04:03.902595: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 15:04:03.902652: E tensorflow/core/util/events_writer.cc:131] Failed to flush 13306 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.78it/s]
+mean loss :1.490510
+accuracy: 0.925998
+eval mean loss: 1.521332
+eval accuracy: 0.891234
+eval avg class acc: 0.850615
+***** EPOCH 067 *****
+ 34%|█████████████████████████████████████▎                                                                       | 105/307 [00:59<01:55,  1.75it/s]                  2018-06-13 15:06:04.025167: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 15:06:04.025205: E tensorflow/core/util/events_writer.cc:131] Failed to flush 13503 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.76it/s]
+mean loss :1.487343
+accuracy: 0.926914
+eval mean loss: 1.534678
+eval accuracy: 0.892045
+eval avg class acc: 0.857568
+***** EPOCH 068 *****
+  0%|                                                                                                                       | 0/307 [00:00<?, ?it/s]                  2018-06-13 15:08:07.520497: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 15:08:07.520562: E tensorflow/core/util/events_writer.cc:131] Failed to flush 13706 events to log/events.out.tfevents.1528915393.mario
+ 70%|███████████████████████████████████████████████████████████████████████████▉                                 | 214/307 [02:00<00:52,  1.77it/s]                  2018-06-13 15:10:08.011123: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 15:10:08.011183: E tensorflow/core/util/events_writer.cc:131] Failed to flush 13920 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.79it/s]
+mean loss :1.487146
+accuracy: 0.923555
+eval mean loss: 1.532237
+eval accuracy: 0.889610
+eval avg class acc: 0.853940
+***** EPOCH 069 *****
+ 35%|█████████████████████████████████████▋                                                                       | 106/307 [00:59<01:51,  1.80it/s]                  2018-06-13 15:12:08.257588: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 15:12:08.257907: E tensorflow/core/util/events_writer.cc:131] Failed to flush 14118 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.79it/s]
+mean loss :1.486428
+accuracy: 0.925896
+eval mean loss: 1.557973
+eval accuracy: 0.879464
+eval avg class acc: 0.843292
+***** EPOCH 070 *****
+  0%|                                                                                                                       | 0/307 [00:00<?, ?it/s]                  2018-06-13 15:14:10.840698: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 15:14:10.840764: E tensorflow/core/util/events_writer.cc:131] Failed to flush 14320 events to log/events.out.tfevents.1528915393.mario
+ 70%|████████████████████████████████████████████████████████████████████████████▎                                | 215/307 [02:00<00:51,  1.79it/s]                  2018-06-13 15:16:11.128813: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 15:16:11.128868: E tensorflow/core/util/events_writer.cc:131] Failed to flush 14535 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:51<00:00,  1.77it/s]
+mean loss :1.487748
+accuracy: 0.925285
+eval mean loss: 1.539530
+eval accuracy: 0.884740
+eval avg class acc: 0.857531
+***** EPOCH 071 *****
+ 35%|█████████████████████████████████████▋                                                                       | 106/307 [00:59<01:51,  1.81it/s]                  2018-06-13 15:18:11.528341: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 15:18:11.528400: E tensorflow/core/util/events_writer.cc:131] Failed to flush 14733 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.78it/s]
+mean loss :1.486315
+accuracy: 0.925183
+eval mean loss: 1.524753
+eval accuracy: 0.893669
+eval avg class acc: 0.857937
+***** EPOCH 072 *****
+  0%|                                                                                                                       | 0/307 [00:00<?, ?it/s]                  2018-06-13 15:20:13.732176: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 15:20:13.732234: E tensorflow/core/util/events_writer.cc:131] Failed to flush 14934 events to log/events.out.tfevents.1528915393.mario
+ 70%|███████████████████████████████████████████████████████████████████████████▉                                 | 214/307 [02:00<00:52,  1.77it/s]                  2018-06-13 15:22:13.958901: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 15:22:13.958958: E tensorflow/core/util/events_writer.cc:131] Failed to flush 15148 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.74it/s]
+mean loss :1.483093
+accuracy: 0.925285
+eval mean loss: 1.505691
+eval accuracy: 0.899756
+eval avg class acc: 0.860597
+***** EPOCH 073 *****
+ 34%|█████████████████████████████████████▎                                                                       | 105/307 [00:58<01:51,  1.81it/s]                  2018-06-13 15:24:14.504701: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 15:24:14.504771: E tensorflow/core/util/events_writer.cc:131] Failed to flush 15346 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.78it/s]
+mean loss :1.480547
+accuracy: 0.929458
+eval mean loss: 1.512210
+eval accuracy: 0.897727
+eval avg class acc: 0.856138
+***** EPOCH 074 *****
+  0%|                                                                                                                       | 0/307 [00:00<?, ?it/s]                  2018-06-13 15:26:17.473661: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 15:26:17.473739: E tensorflow/core/util/events_writer.cc:131] Failed to flush 15548 events to log/events.out.tfevents.1528915393.mario
+ 70%|███████████████████████████████████████████████████████████████████████████▉                                 | 214/307 [02:00<00:52,  1.76it/s]                  2018-06-13 15:28:17.815168: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 15:28:17.815226: E tensorflow/core/util/events_writer.cc:131] Failed to flush 15762 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.79it/s]
+mean loss :1.479944
+accuracy: 0.929560
+eval mean loss: 1.543316
+eval accuracy: 0.878653
+eval avg class acc: 0.849816
+***** EPOCH 075 *****
+ 35%|█████████████████████████████████████▋                                                                       | 106/307 [00:59<01:54,  1.75it/s]                  2018-06-13 15:30:18.244469: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 15:30:18.244536: E tensorflow/core/util/events_writer.cc:131] Failed to flush 15960 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.77it/s]
+mean loss :1.480175
+accuracy: 0.930578
+eval mean loss: 1.533382
+eval accuracy: 0.885146
+eval avg class acc: 0.846242
+***** EPOCH 076 *****
+  0%|                                                                                                                       | 0/307 [00:00<?, ?it/s]                  2018-06-13 15:32:21.183668: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 15:32:21.183730: E tensorflow/core/util/events_writer.cc:131] Failed to flush 16162 events to log/events.out.tfevents.1528915393.mario
+ 70%|███████████████████████████████████████████████████████████████████████████▉                                 | 214/307 [02:00<00:52,  1.77it/s]                  2018-06-13 15:34:21.414933: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 15:34:21.415160: E tensorflow/core/util/events_writer.cc:131] Failed to flush 16376 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.78it/s]
+mean loss :1.481628
+accuracy: 0.929967
+eval mean loss: 1.516411
+eval accuracy: 0.900162
+eval avg class acc: 0.872899
+***** EPOCH 077 *****
+ 34%|████████████████████████████████████▉                                                                        | 104/307 [00:58<01:53,  1.79it/s]                  2018-06-13 15:36:21.686092: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 15:36:21.686142: E tensorflow/core/util/events_writer.cc:131] Failed to flush 16573 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.77it/s]
+mean loss :1.478279
+accuracy: 0.930171
+eval mean loss: 1.503266
+eval accuracy: 0.898539
+eval avg class acc: 0.865521
+***** EPOCH 078 *****
+  0%|                                                                                                                       | 0/307 [00:00<?, ?it/s]                  2018-06-13 15:38:25.139718: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 15:38:25.139785: E tensorflow/core/util/events_writer.cc:131] Failed to flush 16776 events to log/events.out.tfevents.1528915393.mario
+ 70%|███████████████████████████████████████████████████████████████████████████▉                                 | 214/307 [02:00<00:51,  1.79it/s]                  2018-06-13 15:40:25.464005: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 15:40:25.464060: E tensorflow/core/util/events_writer.cc:131] Failed to flush 16990 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.79it/s]
+mean loss :1.479567
+accuracy: 0.930069
+eval mean loss: 1.521708
+eval accuracy: 0.892451
+eval avg class acc: 0.856312
+***** EPOCH 079 *****
+ 34%|█████████████████████████████████████▎                                                                       | 105/307 [00:58<01:52,  1.79it/s]                  2018-06-13 15:42:25.749042: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 15:42:25.749122: E tensorflow/core/util/events_writer.cc:131] Failed to flush 17188 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.81it/s]
+mean loss :1.474168
+accuracy: 0.931393
+eval mean loss: 1.523272
+eval accuracy: 0.895698
+eval avg class acc: 0.850418
+***** EPOCH 080 *****
+  0%|▎                                                                                                              | 1/307 [00:00<03:01,  1.69it/s]                  2018-06-13 15:44:28.718477: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 15:44:28.718533: E tensorflow/core/util/events_writer.cc:131] Failed to flush 17390 events to log/events.out.tfevents.1528915393.mario
+ 70%|███████████████████████████████████████████████████████████████████████████▉                                 | 214/307 [02:00<00:51,  1.79it/s]                  2018-06-13 15:46:28.750900: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 15:46:28.751099: E tensorflow/core/util/events_writer.cc:131] Failed to flush 17604 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.79it/s]
+mean loss :1.473046
+accuracy: 0.934039
+eval mean loss: 1.528522
+eval accuracy: 0.884740
+eval avg class acc: 0.847380
+***** EPOCH 081 *****
+ 34%|████████████████████████████████████▉                                                                        | 104/307 [00:58<01:53,  1.79it/s]                  2018-06-13 15:48:28.855546: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 15:48:28.855602: E tensorflow/core/util/events_writer.cc:131] Failed to flush 17801 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.78it/s]
+mean loss :1.473126
+accuracy: 0.931596
+eval mean loss: 1.514395
+eval accuracy: 0.897727
+eval avg class acc: 0.865175
+***** EPOCH 082 *****
+  0%|                                                                                                                       | 0/307 [00:00<?, ?it/s]                  2018-06-13 15:50:32.061710: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 15:50:32.061763: E tensorflow/core/util/events_writer.cc:131] Failed to flush 18004 events to log/events.out.tfevents.1528915393.mario
+ 70%|████████████████████████████████████████████████████████████████████████████▎                                | 215/307 [02:00<00:51,  1.77it/s]                  2018-06-13 15:52:32.590529: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 15:52:32.590739: E tensorflow/core/util/events_writer.cc:131] Failed to flush 18219 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:51<00:00,  1.80it/s]
+mean loss :1.467281
+accuracy: 0.934955
+eval mean loss: 1.503703
+eval accuracy: 0.897321
+eval avg class acc: 0.860646
+***** EPOCH 083 *****
+ 35%|█████████████████████████████████████▋                                                                       | 106/307 [00:59<01:53,  1.77it/s]                  2018-06-13 15:54:32.865850: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 15:54:32.865902: E tensorflow/core/util/events_writer.cc:131] Failed to flush 18417 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.81it/s]
+mean loss :1.463531
+accuracy: 0.936482
+eval mean loss: 1.519170
+eval accuracy: 0.902192
+eval avg class acc: 0.878367
+***** EPOCH 084 *****
+  0%|                                                                                                                       | 0/307 [00:00<?, ?it/s]                  2018-06-13 15:56:35.586445: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 15:56:35.586493: E tensorflow/core/util/events_writer.cc:131] Failed to flush 18618 events to log/events.out.tfevents.1528915393.mario
+ 70%|████████████████████████████████████████████████████████████████████████████▎                                | 215/307 [02:00<00:51,  1.78it/s]                  2018-06-13 15:58:36.025704: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 15:58:36.025872: E tensorflow/core/util/events_writer.cc:131] Failed to flush 18832 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.81it/s]
+mean loss :1.468634
+accuracy: 0.934548
+eval mean loss: 1.514086
+eval accuracy: 0.889205
+eval avg class acc: 0.850358
+***** EPOCH 085 *****
+ 34%|████████████████████████████████████▉                                                                        | 104/307 [00:58<01:54,  1.77it/s]                  2018-06-13 16:00:36.179474: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 16:00:36.179525: E tensorflow/core/util/events_writer.cc:131] Failed to flush 19029 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.76it/s]
+mean loss :1.463967
+accuracy: 0.938925
+eval mean loss: 1.542381
+eval accuracy: 0.890828
+eval avg class acc: 0.868891
+***** EPOCH 086 *****
+  0%|                                                                                                                       | 0/307 [00:00<?, ?it/s]                  2018-06-13 16:02:39.422089: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 16:02:39.422157: E tensorflow/core/util/events_writer.cc:131] Failed to flush 19232 events to log/events.out.tfevents.1528915393.mario
+ 70%|████████████████████████████████████████████████████████████████████████████▎                                | 215/307 [02:00<00:51,  1.80it/s]                  2018-06-13 16:04:39.733862: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 16:04:39.734064: E tensorflow/core/util/events_writer.cc:131] Failed to flush 19446 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.77it/s]
+mean loss :1.465374
+accuracy: 0.932818
+eval mean loss: 1.514402
+eval accuracy: 0.892451
+eval avg class acc: 0.858366
+***** EPOCH 087 *****
+ 34%|█████████████████████████████████████▎                                                                       | 105/307 [00:59<01:53,  1.78it/s]                  2018-06-13 16:06:39.917108: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 16:06:39.917163: E tensorflow/core/util/events_writer.cc:131] Failed to flush 19643 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.74it/s]
+mean loss :1.461888
+accuracy: 0.936889
+eval mean loss: 1.515635
+eval accuracy: 0.891234
+eval avg class acc: 0.863950
+***** EPOCH 088 *****
+  0%|                                                                                                                       | 0/307 [00:00<?, ?it/s]                  2018-06-13 16:08:43.239161: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 16:08:43.239218: E tensorflow/core/util/events_writer.cc:131] Failed to flush 19846 events to log/events.out.tfevents.1528915393.mario
+ 70%|████████████████████████████████████████████████████████████████████████████▎                                | 215/307 [02:00<00:51,  1.78it/s]                  2018-06-13 16:10:43.286626: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 16:10:43.286686: E tensorflow/core/util/events_writer.cc:131] Failed to flush 20060 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.78it/s]
+mean loss :1.461721
+accuracy: 0.935566
+eval mean loss: 1.517871
+eval accuracy: 0.901786
+eval avg class acc: 0.867235
+***** EPOCH 089 *****
+ 35%|█████████████████████████████████████▋                                                                       | 106/307 [00:59<01:51,  1.80it/s]                  2018-06-13 16:12:43.811835: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 16:12:43.812030: E tensorflow/core/util/events_writer.cc:131] Failed to flush 20258 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.76it/s]
+mean loss :1.461363
+accuracy: 0.933632
+eval mean loss: 1.539914
+eval accuracy: 0.881494
+eval avg class acc: 0.843965
+***** EPOCH 090 *****
+  0%|                                                                                                                       | 0/307 [00:00<?, ?it/s]                  2018-06-13 16:14:46.334686: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 16:14:46.334741: E tensorflow/core/util/events_writer.cc:131] Failed to flush 20460 events to log/events.out.tfevents.1528915393.mario
+ 70%|████████████████████████████████████████████████████████████████████████████▋                                | 216/307 [02:00<00:50,  1.80it/s]                  2018-06-13 16:16:46.754492: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 16:16:46.754694: E tensorflow/core/util/events_writer.cc:131] Failed to flush 20675 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.79it/s]
+mean loss :1.459705
+accuracy: 0.937704
+eval mean loss: 1.530104
+eval accuracy: 0.890016
+eval avg class acc: 0.858023
+***** EPOCH 091 *****
+ 35%|█████████████████████████████████████▋                                                                       | 106/307 [00:59<01:53,  1.77it/s]                  2018-06-13 16:18:47.025717: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 16:18:47.025779: E tensorflow/core/util/events_writer.cc:131] Failed to flush 20873 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:51<00:00,  1.75it/s]
+mean loss :1.459742
+accuracy: 0.939129
+eval mean loss: 1.515818
+eval accuracy: 0.898133
+eval avg class acc: 0.874556
+***** EPOCH 092 *****
+  0%|                                                                                                                       | 0/307 [00:00<?, ?it/s]                  2018-06-13 16:20:48.777688: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 16:20:48.777743: E tensorflow/core/util/events_writer.cc:131] Failed to flush 21074 events to log/events.out.tfevents.1528915393.mario
+ 70%|████████████████████████████████████████████████████████████████████████████▎                                | 215/307 [02:00<00:51,  1.78it/s]                  2018-06-13 16:22:49.069559: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 16:22:49.069691: E tensorflow/core/util/events_writer.cc:131] Failed to flush 21288 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.78it/s]
+mean loss :1.457569
+accuracy: 0.938925
+eval mean loss: 1.515199
+eval accuracy: 0.898133
+eval avg class acc: 0.862756
+***** EPOCH 093 *****
+ 34%|████████████████████████████████████▉                                                                        | 104/307 [00:58<01:53,  1.78it/s]                  2018-06-13 16:24:49.111698: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 16:24:49.111755: E tensorflow/core/util/events_writer.cc:131] Failed to flush 21485 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.76it/s]
+mean loss :1.460128
+accuracy: 0.936279
+eval mean loss: 1.518156
+eval accuracy: 0.892045
+eval avg class acc: 0.857887
+***** EPOCH 094 *****
+  0%|                                                                                                                       | 0/307 [00:00<?, ?it/s]                  2018-06-13 16:26:52.030948: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 16:26:52.031003: E tensorflow/core/util/events_writer.cc:131] Failed to flush 21688 events to log/events.out.tfevents.1528915393.mario
+ 70%|████████████████████████████████████████████████████████████████████████████▎                                | 215/307 [02:00<00:51,  1.79it/s]                  2018-06-13 16:28:52.159792: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 16:28:52.159929: E tensorflow/core/util/events_writer.cc:131] Failed to flush 21902 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.78it/s]
+mean loss :1.458784
+accuracy: 0.938009
+eval mean loss: 1.552243
+eval accuracy: 0.886769
+eval avg class acc: 0.853943
+***** EPOCH 095 *****
+ 35%|█████████████████████████████████████▋                                                                       | 106/307 [00:59<01:53,  1.78it/s]                  2018-06-13 16:30:52.481486: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 16:30:52.481657: E tensorflow/core/util/events_writer.cc:131] Failed to flush 22100 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.78it/s]
+mean loss :1.457848
+accuracy: 0.938009
+eval mean loss: 1.559748
+eval accuracy: 0.878247
+eval avg class acc: 0.852135
+***** EPOCH 096 *****
+  0%|                                                                                                                       | 0/307 [00:00<?, ?it/s]                  2018-06-13 16:32:55.213337: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 16:32:55.213396: E tensorflow/core/util/events_writer.cc:131] Failed to flush 22302 events to log/events.out.tfevents.1528915393.mario
+ 70%|███████████████████████████████████████████████████████████████████████████▉                                 | 214/307 [02:00<00:52,  1.79it/s]                  2018-06-13 16:34:55.543770: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 16:34:55.543838: E tensorflow/core/util/events_writer.cc:131] Failed to flush 22516 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.77it/s]
+mean loss :1.455489
+accuracy: 0.939943
+eval mean loss: 1.527551
+eval accuracy: 0.892045
+eval avg class acc: 0.851053
+***** EPOCH 097 *****
+ 34%|████████████████████████████████████▉                                                                        | 104/307 [00:58<01:53,  1.78it/s]                  2018-06-13 16:36:56.005377: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 16:36:56.005582: E tensorflow/core/util/events_writer.cc:131] Failed to flush 22713 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.78it/s]
+mean loss :1.456178
+accuracy: 0.940045
+eval mean loss: 1.513055
+eval accuracy: 0.896104
+eval avg class acc: 0.860319
+***** EPOCH 098 *****
+  0%|                                                                                                                       | 0/307 [00:00<?, ?it/s]                  2018-06-13 16:38:59.424638: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 16:38:59.424694: E tensorflow/core/util/events_writer.cc:131] Failed to flush 22916 events to log/events.out.tfevents.1528915393.mario
+ 70%|████████████████████████████████████████████████████████████████████████████▎                                | 215/307 [02:00<00:51,  1.79it/s]                  2018-06-13 16:40:59.608316: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 16:40:59.608360: E tensorflow/core/util/events_writer.cc:131] Failed to flush 23130 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.80it/s]
+mean loss :1.456874
+accuracy: 0.940554
+eval mean loss: 1.507668
+eval accuracy: 0.902597
+eval avg class acc: 0.879035
+***** EPOCH 099 *****
+ 35%|█████████████████████████████████████▋                                                                       | 106/307 [00:59<01:53,  1.78it/s]                  2018-06-13 16:43:00.113521: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 16:43:00.113674: E tensorflow/core/util/events_writer.cc:131] Failed to flush 23328 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.79it/s]
+mean loss :1.453154
+accuracy: 0.940757
+eval mean loss: 1.527544
+eval accuracy: 0.890422
+eval avg class acc: 0.858147
+***** EPOCH 100 *****
+  0%|                                                                                                                       | 0/307 [00:00<?, ?it/s]                  2018-06-13 16:45:02.946647: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 16:45:02.946704: E tensorflow/core/util/events_writer.cc:131] Failed to flush 23530 events to log/events.out.tfevents.1528915393.mario
+ 70%|███████████████████████████████████████████████████████████████████████████▉                                 | 214/307 [02:00<00:53,  1.75it/s]                  2018-06-13 16:47:03.190615: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 16:47:03.190672: E tensorflow/core/util/events_writer.cc:131] Failed to flush 23744 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.77it/s]
+mean loss :1.450446
+accuracy: 0.938721
+eval mean loss: 1.505108
+eval accuracy: 0.901786
+eval avg class acc: 0.877963
+Model saved in file: log/model.ckpt100
+***** EPOCH 101 *****
+ 34%|████████████████████████████████████▉                                                                        | 104/307 [00:58<01:54,  1.77it/s]                  2018-06-13 16:49:03.664957: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 16:49:03.665025: E tensorflow/core/util/events_writer.cc:131] Failed to flush 23940 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.75it/s]
+mean loss :1.451664
+accuracy: 0.938009
+eval mean loss: 1.501834
+eval accuracy: 0.898133
+eval avg class acc: 0.871334
+***** EPOCH 102 *****
+  0%|                                                                                                                       | 0/307 [00:00<?, ?it/s]                  2018-06-13 16:51:08.053471: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 16:51:08.053584: E tensorflow/core/util/events_writer.cc:131] Failed to flush 24144 events to log/events.out.tfevents.1528915393.mario
+ 70%|████████████████████████████████████████████████████████████████████████████▎                                | 215/307 [02:00<00:51,  1.77it/s]                  2018-06-13 16:53:08.337772: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 16:53:08.337844: E tensorflow/core/util/events_writer.cc:131] Failed to flush 24359 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.79it/s]
+mean loss :1.446456
+accuracy: 0.943404
+eval mean loss: 1.514119
+eval accuracy: 0.896510
+eval avg class acc: 0.854079
+***** EPOCH 103 *****
+ 35%|█████████████████████████████████████▋                                                                       | 106/307 [00:59<01:54,  1.75it/s]                  2018-06-13 16:55:08.679501: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 16:55:08.679569: E tensorflow/core/util/events_writer.cc:131] Failed to flush 24556 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.76it/s]
+mean loss :1.447848
+accuracy: 0.939739
+eval mean loss: 1.514172
+eval accuracy: 0.903003
+eval avg class acc: 0.864143
+***** EPOCH 104 *****
+  0%|                                                                                                                       | 0/307 [00:00<?, ?it/s]                  2018-06-13 16:57:11.608992: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 16:57:11.609054: E tensorflow/core/util/events_writer.cc:131] Failed to flush 24758 events to log/events.out.tfevents.1528915393.mario
+ 70%|████████████████████████████████████████████████████████████████████████████▎                                | 215/307 [02:00<00:51,  1.80it/s]                  2018-06-13 16:59:11.616001: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 16:59:11.616066: E tensorflow/core/util/events_writer.cc:131] Failed to flush 24972 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.80it/s]
+mean loss :1.446967
+accuracy: 0.942284
+eval mean loss: 1.502301
+eval accuracy: 0.895698
+eval avg class acc: 0.864874
+***** EPOCH 105 *****
+ 35%|█████████████████████████████████████▋                                                                       | 106/307 [00:59<01:53,  1.78it/s]                  2018-06-13 17:01:12.039240: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 17:01:12.039299: E tensorflow/core/util/events_writer.cc:131] Failed to flush 25170 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.77it/s]
+mean loss :1.444593
+accuracy: 0.943709
+eval mean loss: 1.512191
+eval accuracy: 0.899351
+eval avg class acc: 0.868438
+***** EPOCH 106 *****
+  0%|                                                                                                                       | 0/307 [00:00<?, ?it/s]                  2018-06-13 17:03:14.891626: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 17:03:14.891689: E tensorflow/core/util/events_writer.cc:131] Failed to flush 25372 events to log/events.out.tfevents.1528915393.mario
+ 70%|███████████████████████████████████████████████████████████████████████████▉                                 | 214/307 [02:00<00:52,  1.76it/s]                  2018-06-13 17:05:15.277372: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 17:05:15.277440: E tensorflow/core/util/events_writer.cc:131] Failed to flush 25586 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.80it/s]
+mean loss :1.445186
+accuracy: 0.945236
+eval mean loss: 1.510660
+eval accuracy: 0.898945
+eval avg class acc: 0.868138
+***** EPOCH 107 *****
+ 35%|█████████████████████████████████████▋                                                                       | 106/307 [00:59<01:53,  1.78it/s]                  2018-06-13 17:07:15.689976: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 17:07:15.690034: E tensorflow/core/util/events_writer.cc:131] Failed to flush 25784 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.80it/s]
+mean loss :1.444145
+accuracy: 0.944829
+eval mean loss: 1.519508
+eval accuracy: 0.896916
+eval avg class acc: 0.865464
+***** EPOCH 108 *****
+  0%|                                                                                                                       | 0/307 [00:00<?, ?it/s]                  2018-06-13 17:09:18.351360: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 17:09:18.351420: E tensorflow/core/util/events_writer.cc:131] Failed to flush 25986 events to log/events.out.tfevents.1528915393.mario
+ 70%|████████████████████████████████████████████████████████████████████████████▎                                | 215/307 [02:00<00:51,  1.79it/s]                  2018-06-13 17:11:18.756927: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 17:11:18.756994: E tensorflow/core/util/events_writer.cc:131] Failed to flush 26201 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:51<00:00,  1.75it/s]
+mean loss :1.444961
+accuracy: 0.940147
+eval mean loss: 1.514541
+eval accuracy: 0.898133
+eval avg class acc: 0.871153
+***** EPOCH 109 *****
+ 35%|█████████████████████████████████████▋                                                                       | 106/307 [00:59<01:51,  1.80it/s]                  2018-06-13 17:13:19.109191: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 17:13:19.110048: E tensorflow/core/util/events_writer.cc:131] Failed to flush 26399 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:51<00:00,  1.80it/s]
+mean loss :1.441965
+accuracy: 0.944015
+eval mean loss: 1.508698
+eval accuracy: 0.900162
+eval avg class acc: 0.865433
+***** EPOCH 110 *****
+  0%|                                                                                                                       | 0/307 [00:00<?, ?it/s]                  2018-06-13 17:15:20.838500: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 17:15:20.838587: E tensorflow/core/util/events_writer.cc:131] Failed to flush 26600 events to log/events.out.tfevents.1528915393.mario
+ 70%|███████████████████████████████████████████████████████████████████████████▉                                 | 214/307 [02:00<00:51,  1.80it/s]                  2018-06-13 17:17:21.191964: E tensorflow/core/util/events_writer.cc:162] The events file log/events.out.tfevents.1528915393.mario has disappeared.
+2018-06-13 17:17:21.192179: E tensorflow/core/util/events_writer.cc:131] Failed to flush 26814 events to log/events.out.tfevents.1528915393.mario
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████| 307/307 [02:52<00:00,  1.77it/s]
+mean loss :1.442947
+accuracy: 0.945440
+eval mean loss: 1.547581
+eval accuracy: 0.891640
+eval avg class acc: 0.868386
